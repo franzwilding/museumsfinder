@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Museumsfinder</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+    <header>
+        <h1>{% trans %}app.title{% endtrans %}</h1>
+    </header>
+
+    <section id="app">Loading...</section>
+
+    <footer>
+        <article>
+            {% include '@App/Default/about/' ~ app.request.locale ~ '.html.twig' %}
+        </article>
+    </footer>
+    <script type="text/x-template" id="component-root">
+        <h5>Content from Template</h5>
+    </script>
+    <script src="{{ asset('museumfinder.js') }}"></script>
+</body>
+</html>
