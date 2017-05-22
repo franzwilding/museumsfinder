@@ -1,0 +1,7 @@
+
+$font-family: "Helvetica Neue", Helvetica, Tahoma, sans-serif;
+
+@mixin font-size($sizeValue: 1.6) {
+  font-size: $sizeValue + px;
+  font-size: ($sizeValue / 16) + rem;
+}

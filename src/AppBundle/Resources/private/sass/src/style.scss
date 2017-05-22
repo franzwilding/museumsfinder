@@ -3,5 +3,6 @@
 @import "../vendor/meyer-reset/meyer-reset";
 
 // include base & components
+@import "./config/**/*";
 @import "./base/**/*";
 @import "./components/**/*";
