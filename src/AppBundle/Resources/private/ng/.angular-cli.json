@@ -6,7 +6,7 @@
   "apps": [
     {
       "root": "src",
-      "outDir": "../../../../../web/ng-museumfinder",
+      "outDir": "../../../../../web/ng",
       "assets": [],
       "index": "index.html",
       "main": "main.ts",
