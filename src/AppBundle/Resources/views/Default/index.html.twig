@@ -13,16 +13,17 @@
         <h1>{% trans %}app.title{% endtrans %}</h1>
     </header>
 
-    <section id="app">Loading...</section>
+    <app>Loading...</app>
 
     <footer>
         <article>
             {% include '@App/Default/about/' ~ app.request.locale ~ '.html.twig' %}
         </article>
     </footer>
-    <script type="text/x-template" id="component-root">
-        <h5>Content from Template</h5>
-    </script>
-    <script src="{{ asset('museumfinder.js') }}"></script>
+
+    <script type="text/javascript" src="{{ asset('ng-museumfinder/inline.bundle.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('ng-museumfinder/polyfills.bundle.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('ng-museumfinder/vendor.bundle.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('ng-museumfinder/main.bundle.js') }}"></script>
 </body>
 </html>
