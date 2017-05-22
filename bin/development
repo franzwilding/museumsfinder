@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+ttab ./bin/console server:run
+ttab -d ./src/AppBundle/Resources/private/sass/ ./watch.sh
+ttab -d ./src/AppBundle/Resources/private/ng ng build -watch
