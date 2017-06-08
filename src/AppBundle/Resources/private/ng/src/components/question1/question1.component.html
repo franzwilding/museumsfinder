@@ -1,3 +1,10 @@
 <h2>1. In Welche Richtung soll es gehen?</h2>
 
+<form>
+  <label for="q1[{{ cat }}]" *ngFor="let cat of categories;" class="{{ isSelected(cat) ? 'active' : '' }}">
+    <input id="q1[{{ cat }}]" type="checkbox" [checked]="isSelected(cat)" (change)="toggle(cat)" />
+    {{ cat }}
+  </label>
+</form>
+
 <button (click)="data.next()" class="default">Weiter</button>

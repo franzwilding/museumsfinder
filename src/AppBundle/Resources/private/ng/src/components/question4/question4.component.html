@@ -1,3 +1,7 @@
 <h2>4. Interessierst du dich eher für große, bekannte oder kleinere, spezielle Museen?</h2>
 
+<form>
+  <input type="range" step="1" min="0" max="100" [value]="data.uniqueness" (change)="change($event)" />
+</form>
+
 <button (click)="data.next()" class="default">Weiter</button>

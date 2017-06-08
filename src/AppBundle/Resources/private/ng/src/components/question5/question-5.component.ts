@@ -7,6 +7,9 @@ import {Data} from "../../app/data";
 })
 export class Question5 {
 
-  constructor(private data: Data) {
+  constructor(private data: Data) {}
+
+  change(event) : void {
+    this.data.searchText = event.target.value;
   }
 }

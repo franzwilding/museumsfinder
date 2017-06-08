@@ -1,3 +1,9 @@
 <h2>5. Beschreibe in einigen Sätzen, was du gerne sehen möchtest.</h2>
 
+<form>
+  <textarea placeholder="Ich bin auf der Suche nach einem Museum mit freiem Eintritt, ..." [value]="data.searchText" (change)="change($event)">
+
+  </textarea>
+</form>
+
 <button (click)="data.next()" class="default">Museum finden</button>

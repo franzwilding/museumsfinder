@@ -1,3 +1,10 @@
 <h2>3. Wähle Merkmale sind für dich relevant?</h2>
 
+<form>
+  <label for="q3[{{ t }}]" *ngFor="let t of tags;" class="{{ isSelected(t) ? 'active' : '' }}">
+    <input id="q3[{{ t }}]" type="checkbox" [checked]="isSelected(t)" (change)="toggle(t)" />
+    {{ t }}
+  </label>
+</form>
+
 <button (click)="data.next()" class="default">Weiter</button>

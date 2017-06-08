@@ -7,6 +7,9 @@ import {Data} from "../../app/data";
 })
 export class Question4 {
 
-  constructor(private data: Data) {
+  constructor(private data: Data) {}
+
+  change(event) : void {
+    this.data.uniqueness = event.target.value;
   }
 }

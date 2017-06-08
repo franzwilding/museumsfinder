@@ -7,6 +7,22 @@ import {Data} from "../../app/data";
 })
 export class Question3 {
 
-  constructor(private data: Data) {
+  tags : string[] = [
+    'Barrierefrei',
+    'Freier Eintritt',
+  ];
+
+  constructor(private data: Data) {}
+
+  toggle(tag) : void {
+    if(this.isSelected(tag)) {
+      this.data.tags.splice(this.data.tags.indexOf(tag), 1);
+    } else {
+      this.data.tags.push(tag);
+    }
+  }
+
+  isSelected(tag: string) : boolean {
+    return this.data.tags.indexOf(tag) >= 0;
   }
 }
