@@ -16,7 +16,7 @@ export class Paginator {
   }
 
   goTo(index) : void {
-    this.data.currentQuestion = index + 1;
+    this.data.goTo(index + 1);
   }
 
   itemClass(cur) : string {

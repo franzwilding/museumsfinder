@@ -20,6 +20,12 @@ module.exports = __webpack_require__(69);
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(73);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(171);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
+/* unused harmony export Museum */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Data; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -27,40 +33,104 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var Museum = (function () {
+    function Museum() {
+        this.id = 0;
+        this.title = "";
+        this.rating = 0;
+        this.website = "";
+        this.matching = 0;
+        this.address = "";
+        this.open = false;
+    }
+    Museum.prototype.matchingClass = function () {
+        return '';
+    };
+    return Museum;
+}());
 
 var Data = (function () {
-    function Data() {
+    function Data(http) {
+        var _this = this;
+        this.http = http;
+        this.searchUrl = "";
         this.started = false;
         this.countQuestions = 5;
         this.currentQuestion = 0;
+        this.categories = [];
+        this.districts = [];
+        this.tags = [];
+        this.uniqueness = 0;
+        this.searchText = '';
+        this.onCurrentQuestionChange = new __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__["Observable"](function (observer) { _this.observer = observer; });
+        this.onCurrentQuestionChange.subscribe();
     }
     Data.prototype.start = function () {
         this.started = true;
+        this.observer.next(this.currentQuestion);
     };
     Data.prototype.restart = function () {
         this.started = true;
         this.clear();
-        this.currentQuestion = 1;
+        if (this.currentQuestion != 1) {
+            this.currentQuestion = 1;
+            this.observer.next(this.currentQuestion);
+        }
     };
     Data.prototype.end = function () {
         this.started = false;
         this.clear();
-        this.currentQuestion = 0;
+        if (this.currentQuestion != 0) {
+            this.currentQuestion = 0;
+            this.observer.next(this.currentQuestion);
+        }
     };
     Data.prototype.next = function () {
         this.currentQuestion = this.currentQuestion + 1;
+        this.observer.next(this.currentQuestion);
     };
     Data.prototype.prev = function () {
         this.currentQuestion = this.currentQuestion - 1;
+        this.observer.next(this.currentQuestion);
+    };
+    Data.prototype.goTo = function (index) {
+        this.currentQuestion = index;
+        this.observer.next(this.currentQuestion);
     };
     Data.prototype.clear = function () {
+        this.categories = [];
+        this.districts = [];
+        this.tags = [];
+        this.uniqueness = 0;
+        this.searchText = '';
+    };
+    Data.prototype.getSearchData = function () {
+        return {
+            categories: this.categories,
+            districts: this.districts,
+            tags: this.tags,
+            uniqueness: this.uniqueness,
+            searchText: this.searchText
+        };
+    };
+    Data.prototype.find = function () {
+        return this.http.post(this.searchUrl, this.getSearchData()).map(function (res) { return res.json(); });
     };
     return Data;
 }());
 Data = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Injectable */])()
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Injectable */])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object])
 ], Data);
 
+var _a;
 //# sourceMappingURL=data.js.map
 
 /***/ }),
@@ -312,7 +382,7 @@ var Paginator = (function () {
         }
     }
     Paginator.prototype.goTo = function (index) {
-        this.data.currentQuestion = index + 1;
+        this.data.goTo(index + 1);
     };
     Paginator.prototype.itemClass = function (cur) {
         return (cur == this.data.currentQuestion) ? 'active' : '';
@@ -352,8 +422,31 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var Results = (function () {
     function Results(data) {
+        var _this = this;
         this.data = data;
+        this.loading = false;
+        this.ratingRange = [1, 2, 3, 4, 5];
+        this.result = [];
+        this.data.onCurrentQuestionChange.subscribe(function (result) {
+            if (result == data.countQuestions + 1) {
+                setTimeout(function () {
+                    _this.find();
+                }, 300);
+            }
+        });
     }
+    Results.prototype.find = function () {
+        var _this = this;
+        this.result = [];
+        this.loading = true;
+        this.data.find().subscribe(function (result) {
+            _this.result = result;
+            _this.loading = false;
+        }, function () {
+            alert("Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.");
+            _this.data.goTo(_this.data.countQuestions);
+        });
+    };
     return Results;
 }());
 Results = __decorate([
@@ -379,7 +472,7 @@ module.exports = "<button (click)=\"goTo(cur)\" *ngFor=\"let item of items; let 
 /***/ 170:
 /***/ (function(module, exports) {
 
-module.exports = "<h2>Gefundene Museen</h2>"
+module.exports = "<h2>Gefundene Museen</h2>\n\n<article *ngFor=\"let museum of result;\" class=\"{{ museum.open ? 'open' : '' }}\">\n  <div class=\"main\" (click)=\"musem.open = true;\">\n    <h3>\n      {{ museum.title }}\n      <span class=\"goto-icon\">\n        <svg width=\"15px\" height=\"13px\" viewBox=\"0 0 15 13\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n            <g id=\"Page-1\" stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\n                <path d=\"M15,5.9375 L8.75,11.6796875 L8.75,8.2421875 C6.69269805,8.2421875 4.98047559,8.58072578 3.61328125,9.2578125 C2.24608691,9.93489922 1.04167188,11.0156176 0,12.5 C1.06771367,7.05726445 3.98435117,3.99739922 8.75,3.3203125 L8.75,0 L15,5.9375 Z\" id=\"ion-android-share---Ionicons\" fill=\"currentColor\"></path>\n            </g>\n        </svg>\n      </span>\n    </h3>\n    <span class=\"matching {{ museum.matchingClass() }}\">{{ museum.matching }}</span>\n    <p class=\"address\">{{ museum.address }}</p>\n  </div>\n  <aside>\n    <button class=\"close\" (click)=\"musem.open = false;\">\n      <svg width=\"12px\" height=\"12px\" viewBox=\"0 0 12 12\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n        <g id=\"Page-1\" stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\n          <polygon id=\"ion-android-close---Ionicons\" fill=\"currentColor\" points=\"11.640625 1.171875 6.9921875 5.8203125 11.640625 10.46875 10.46875 11.640625 5.8203125 6.9921875 1.171875 11.640625 0 10.46875 4.6484375 5.8203125 0 1.171875 1.171875 0 5.8203125 4.6484375 10.46875 0\"></polygon>\n        </g>\n      </svg>\n    </button>\n\n    <h3>Wie gut passt dieser Treffer?</h3>\n\n    <a [href]=\"museum.website\">\n      <svg width=\"12px\" height=\"10px\" viewBox=\"0 0 12 10\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n        <g id=\"Page-1\" stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\n          <path d=\"M12,4.75 L7,9.34375 L7,6.59375 C5.35415844,6.59375 3.98438047,6.86458062 2.890625,7.40625 C1.79686953,7.94791938 0.8333375,8.81249406 0,10 C0.854170937,5.64581156 3.18748094,3.19791938 7,2.65625 L7,0 L12,4.75 Z\" id=\"\" fill=\"currentColor\"></path>\n        </g>\n      </svg>\n\n      <form class=\"rating\">\n        <label for=\"rating[{{ museum.id }}][{{ rating }}]\" *ngFor=\"let rating of ratingRange;\">\n          <input id=\"rating[{{ museum.id }}][{{ rating }}]\" type=\"radio\" [(ngModel)]=\"museum.rating\"  name=\"rating[{{ museum.id }}]\" [value]=\"rating\" />\n          <svg *ngIf=\"museum.rating >= rating\" width=\"27px\" height=\"27px\" viewBox=\"0 0 27 27\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n            <g id=\"Page-1\" stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\n              <polygon id=\"ion-star---Ionicons\" fill=\"#EFA25E\" points=\"26.25 10.46875 18.1054688 16.5625 21.328125 26.875 13.125 20.3125 4.921875 26.875 8.14453125 16.5625 0 10.46875 10.078125 10.46875 13.125 0.625 16.2304688 10.46875\"></polygon>\n            </g>\n          </svg>\n\n          <svg *ngIf=\"!museum.rating >= rating\"  width=\"27px\" height=\"25px\" viewBox=\"0 0 27 25\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n            <g id=\"Page-1\" stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\n              <path d=\"M26.25,9.87890625 L18.046875,15.6210938 L21.2109375,24.9375 L13.125,19.1367188 L5.0390625,24.9375 L8.203125,15.6210938 L0,9.87890625 L10.0195312,9.87890625 L13.125,0.5625 L16.2304688,9.87890625 L26.25,9.87890625 Z M19.3945312,22.4179688 L16.875,15.2695312 L23.203125,10.875 L15.5273438,10.875 L13.125,3.66796875 L10.7226562,10.875 L3.046875,10.875 L9.375,15.2695312 L6.85546875,22.4179688 L13.125,17.9648438 L19.3945312,22.4179688 Z\" id=\"ion-ios-star-outline---Ionicons\" fill=\"#EFA25E\"></path>\n            </g>\n          </svg>\n        </label>\n      </form>\n\n      <span>Zur Website: {{ museum.title }}</span>\n    </a>\n  </aside>\n</article>"
 
 /***/ }),
 
@@ -455,7 +548,7 @@ var AppComponent = (function () {
         if (!this.data.started) {
             this.data.start();
             setTimeout(function () {
-                _this.data.currentQuestion = 1;
+                _this.data.goTo(1);
             }, 300);
         }
     };

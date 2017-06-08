@@ -25,7 +25,7 @@ export class AppComponent {
     if(!this.data.started) {
       this.data.start();
       setTimeout(() => {
-        this.data.currentQuestion = 1;
+        this.data.goTo(1);
       }, 300);
     }
   }
