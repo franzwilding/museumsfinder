@@ -32,8 +32,16 @@ export class AppComponent {
 
   end() : void {
     if(this.data.started) {
-      if(confirm('Aktuelle Suche abgebrochen und zur Startseite zurückkehren?')) {
+      if(confirm('Aktuelle Suche abbrechen und zur Startseite zurückkehren?')) {
         this.data.end();
+      }
+    }
+  }
+
+  restart() : void {
+    if(this.data.started) {
+      if(confirm('Soll eine neue Suche gestartet werden?')) {
+        this.data.restart();
       }
     }
   }

@@ -4,14 +4,23 @@ import {Injectable} from '@angular/core';
 export class Data {
 
   public started : boolean = false;
+  public countQuestions : number = 5;
   public currentQuestion : number = 0;
 
   public start() : void {
     this.started = true;
   }
 
-  public end() : void {
+  public restart() : void {
     this.started = true;
+    this.clear();
+    this.currentQuestion = 1;
+  }
+
+  public end() : void {
+    this.started = false;
+    this.clear();
+    this.currentQuestion = 0;
   }
 
   public next() : void {
@@ -22,4 +31,7 @@ export class Data {
     this.currentQuestion = this.currentQuestion -1 ;
   }
 
+  public clear() : void {
+
+  }
 }

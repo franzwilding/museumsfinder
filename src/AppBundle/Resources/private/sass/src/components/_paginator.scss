@@ -2,8 +2,8 @@
 section.questions > paginator {
   position: fixed;
   bottom: 0;
-  left: 20px;
-  right: 20px;
+  left: 0;
+  right: 0;
   top: auto;
   height: auto;
   width: auto;
@@ -31,6 +31,5 @@ section.questions > paginator {
     text-transform: uppercase;
     font-weight: bold;
     letter-spacing: 1px;
-    margin-bottom: 10px;
   }
 }

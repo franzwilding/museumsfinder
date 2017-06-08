@@ -7,11 +7,10 @@ import {Data} from "../../app/data";
 })
 export class Paginator {
 
-  count : number = 5;
   items : number[] = [];
 
   constructor(private data: Data) {
-    for(let i = 0; i < this.count; i++) {
+    for(let i = 0; i < this.data.countQuestions; i++) {
       this.items.push(i);
     }
   }

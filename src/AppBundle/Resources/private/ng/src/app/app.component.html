@@ -1,5 +1,14 @@
 <div [class]="getClasses()">
-  <header (click)="end();">
+  <header>
+    <button class="small" (click)="end()" *ngIf="data.started">
+      <svg width="12px" height="12px" viewBox="0 0 59 59" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+          <g transform="translate(-3183.000000, -133.000000)" fill="currentColor">
+            <polygon points="3241.20312 139.257812 3217.96094 162.5 3241.20312 185.742188 3235.34375 191.601562 3212.10156 168.359375 3188.85938 191.601562 3183 185.742188 3206.24219 162.5 3183 139.257812 3188.85938 133.398438 3212.10156 156.640625 3235.34375 133.398438"></polygon>
+          </g>
+        </g>
+      </svg>
+    </button>
     <svg class="logo" width="104px" height="102px" viewBox="0 0 104 102" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
       <g transform="translate(-1261.000000, -176.000000)" fill="currentColor">
         <g transform="translate(1259.000000, 174.000000)">
@@ -16,6 +25,15 @@
       </g>
     </svg>
     <h1>Museen & Sammlungen in Wien</h1>
+    <button class="small" (click)="restart()" *ngIf="data.started && data.currentQuestion > data.countQuestions">
+      <svg width="12px" height="12px" viewBox="0 0 69 69" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+          <g transform="translate(-2936.000000, -128.000000)" fill="currentColor">
+            <path d="M2970.375,188.28125 C2975.84378,188.28125 2980.75909,186.783869 2985.12109,183.789062 C2989.48309,180.794256 2992.57551,176.822941 2994.39844,171.875 L3003.38281,171.875 C3001.29947,179.166703 2997.2305,185.156227 2991.17578,189.84375 C2985.12106,194.531273 2978.18754,196.875 2970.375,196.875 C2960.86974,196.875 2952.76436,193.522169 2946.05859,186.816406 C2939.35283,180.110644 2936,172.005256 2936,162.5 C2936,152.994744 2939.35283,144.889356 2946.05859,138.183594 C2952.76436,131.477831 2960.86974,128.125 2970.375,128.125 C2979.75005,128.125 2987.82288,131.510383 2994.59375,138.28125 L3004.75,128.125 L3004.75,158.203125 L2974.67188,158.203125 L2988.34375,144.53125 C2983.39581,139.322891 2977.40629,136.71875 2970.375,136.71875 C2963.21351,136.71875 2957.12633,139.225235 2952.11328,144.238281 C2947.10024,149.251327 2944.59375,155.338506 2944.59375,162.5 C2944.59375,169.661494 2947.10024,175.748673 2952.11328,180.761719 C2957.12633,185.774765 2963.21351,188.28125 2970.375,188.28125 Z" id="ion-android-refresh---Ionicons" transform="translate(2970.375000, 162.500000) scale(-1, 1) translate(-2970.375000, -162.500000) "></path>
+          </g>
+        </g>
+      </svg>
+    </button>
   </header>
 
   <section class="intro" *ngIf="!data.started">
@@ -31,7 +49,7 @@
     <question-4></question-4>
     <question-5></question-5>
     <results></results>
-    <paginator></paginator>
+    <paginator *ngIf="data.currentQuestion <= data.countQuestions"></paginator>
   </section>
 
 

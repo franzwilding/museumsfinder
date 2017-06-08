@@ -1,14 +1,25 @@
 
-button.large {
-  border: 2px solid $gold;
+button.default, button.large, button.small {
+  border: 1px solid $gold;
   background: none;
   outline: none;
   color: $gold;
-  @include font-size(20);
+  @include font-size(15);
   padding: 8px 30px;
   border-radius: 50px;
   line-height: 100%;
   cursor: pointer;
+}
+
+button.small {
+  @include font-size(12);
+  text-transform: uppercase;
+  padding: 3px 10px;
+}
+
+button.large {
+  border-width: 2px;
+  @include font-size(20);
 
   @media #{$tablet} {
     @include font-size(30);

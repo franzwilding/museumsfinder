@@ -3,7 +3,7 @@ webpackJsonp([1,3],{
 /***/ 130:
 /***/ (function(module, exports) {
 
-module.exports = "<div [class]=\"getClasses()\">\n  <header (click)=\"end();\">\n    <svg class=\"logo\" width=\"104px\" height=\"102px\" viewBox=\"0 0 104 102\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n      <g transform=\"translate(-1261.000000, -176.000000)\" fill=\"currentColor\">\n        <g transform=\"translate(1259.000000, 174.000000)\">\n          <rect x=\"9\" y=\"100.985507\" width=\"90\" height=\"3.01449275\"></rect>\n          <g>\n            <rect opacity=\"0.5\" x=\"15\" y=\"60.2898551\" width=\"7.5\" height=\"34.6666667\"></rect>\n            <rect opacity=\"0.75\" x=\"33\" y=\"48.2318841\" width=\"7.5\" height=\"47.2270531\"></rect>\n            <rect x=\"51\" y=\"39.1884058\" width=\"7.5\" height=\"56.9103777\"></rect>\n            <rect opacity=\"0.75\" x=\"69\" y=\"45.2173913\" width=\"7.5\" height=\"50.2415459\"></rect>\n            <rect opacity=\"0.5\" x=\"87\" y=\"63.3043478\" width=\"7.5\" height=\"31.6521739\"></rect>\n            <path d=\"M100.493467,56.5712702 C101.664379,57.7478392 103.561667,57.7489808 104.73269,56.5723009 L104.91391,56.3902055 C106.084256,55.2142057 106.090014,53.313319 104.921325,52.1389849 L56.1116833,3.09354749 C54.9454328,1.92166297 53.0570049,1.91921347 51.8883167,3.09354749 L3.07867467,52.1389849 C1.91242421,53.3108695 1.91506732,55.2135255 3.08609011,56.3902055 L3.2673101,56.5723009 C4.43765599,57.7483006 6.33568609,57.7477736 7.50653321,56.5712702 L51.8798756,11.9835639 C53.050788,10.8069949 54.9492773,10.8070605 56.1201244,11.9835639 L100.493467,56.5712702 Z\"></path>\n          </g>\n        </g>\n      </g>\n    </svg>\n    <h1>Museen & Sammlungen in Wien</h1>\n  </header>\n\n  <section class=\"intro\" *ngIf=\"!data.started\">\n    <button class=\"large\" (click)=\"start();\">Suche starten</button>\n    <p>Beantworte Fragen und finde das richtige Museum für einen Ausflug.</p>\n  </section>\n\n  <section class=\"questions\" *ngIf=\"data.started\">\n    <div class=\"placeholder\" [style.margin-left]=\"getQuestionsOffset()\"></div>\n    <question-1></question-1>\n    <question-2></question-2>\n    <question-3></question-3>\n    <question-4></question-4>\n    <question-5></question-5>\n    <results></results>\n    <paginator></paginator>\n  </section>\n\n\n  <footer>\n    <article>\n      <h2 id=\"about\">\n        <a href=\"#about\">\n          Über das Projekt\n          <br />\n          <svg width=\"13px\" height=\"9px\" viewBox=\"0 0 13 9\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n            <g transform=\"translate(-1870.000000, -1337.000000)\" fill=\"currentColor\">\n              <polygon points=\"1881.75781 1337.75 1882.5 1338.57031 1876.25 1345.25 1870 1338.57031 1870.74219 1337.75 1876.25 1343.60938\"></polygon>\n            </g>\n          </svg>\n        </a>\n      </h2>\n\n      <p>Lorem Ipsum.</p>\n      <p>Lorem Ipsum.</p>\n      <p>Lorem Ipsum.</p>\n      <p>Lorem Ipsum.</p>\n      <p>Lorem Ipsum.</p>\n      <p>Lorem Ipsum.</p>\n      <p>Lorem Ipsum.</p><p>Lorem Ipsum.</p>\n      <p>Lorem Ipsum.</p>\n    </article>\n  </footer>\n</div>"
+module.exports = "<div [class]=\"getClasses()\">\n  <header>\n    <button class=\"small\" (click)=\"end()\" *ngIf=\"data.started\">\n      <svg width=\"12px\" height=\"12px\" viewBox=\"0 0 59 59\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n        <g stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\n          <g transform=\"translate(-3183.000000, -133.000000)\" fill=\"currentColor\">\n            <polygon points=\"3241.20312 139.257812 3217.96094 162.5 3241.20312 185.742188 3235.34375 191.601562 3212.10156 168.359375 3188.85938 191.601562 3183 185.742188 3206.24219 162.5 3183 139.257812 3188.85938 133.398438 3212.10156 156.640625 3235.34375 133.398438\"></polygon>\n          </g>\n        </g>\n      </svg>\n    </button>\n    <svg class=\"logo\" width=\"104px\" height=\"102px\" viewBox=\"0 0 104 102\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n      <g transform=\"translate(-1261.000000, -176.000000)\" fill=\"currentColor\">\n        <g transform=\"translate(1259.000000, 174.000000)\">\n          <rect x=\"9\" y=\"100.985507\" width=\"90\" height=\"3.01449275\"></rect>\n          <g>\n            <rect opacity=\"0.5\" x=\"15\" y=\"60.2898551\" width=\"7.5\" height=\"34.6666667\"></rect>\n            <rect opacity=\"0.75\" x=\"33\" y=\"48.2318841\" width=\"7.5\" height=\"47.2270531\"></rect>\n            <rect x=\"51\" y=\"39.1884058\" width=\"7.5\" height=\"56.9103777\"></rect>\n            <rect opacity=\"0.75\" x=\"69\" y=\"45.2173913\" width=\"7.5\" height=\"50.2415459\"></rect>\n            <rect opacity=\"0.5\" x=\"87\" y=\"63.3043478\" width=\"7.5\" height=\"31.6521739\"></rect>\n            <path d=\"M100.493467,56.5712702 C101.664379,57.7478392 103.561667,57.7489808 104.73269,56.5723009 L104.91391,56.3902055 C106.084256,55.2142057 106.090014,53.313319 104.921325,52.1389849 L56.1116833,3.09354749 C54.9454328,1.92166297 53.0570049,1.91921347 51.8883167,3.09354749 L3.07867467,52.1389849 C1.91242421,53.3108695 1.91506732,55.2135255 3.08609011,56.3902055 L3.2673101,56.5723009 C4.43765599,57.7483006 6.33568609,57.7477736 7.50653321,56.5712702 L51.8798756,11.9835639 C53.050788,10.8069949 54.9492773,10.8070605 56.1201244,11.9835639 L100.493467,56.5712702 Z\"></path>\n          </g>\n        </g>\n      </g>\n    </svg>\n    <h1>Museen & Sammlungen in Wien</h1>\n    <button class=\"small\" (click)=\"restart()\" *ngIf=\"data.started && data.currentQuestion > data.countQuestions\">\n      <svg width=\"12px\" height=\"12px\" viewBox=\"0 0 69 69\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n        <g stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\n          <g transform=\"translate(-2936.000000, -128.000000)\" fill=\"currentColor\">\n            <path d=\"M2970.375,188.28125 C2975.84378,188.28125 2980.75909,186.783869 2985.12109,183.789062 C2989.48309,180.794256 2992.57551,176.822941 2994.39844,171.875 L3003.38281,171.875 C3001.29947,179.166703 2997.2305,185.156227 2991.17578,189.84375 C2985.12106,194.531273 2978.18754,196.875 2970.375,196.875 C2960.86974,196.875 2952.76436,193.522169 2946.05859,186.816406 C2939.35283,180.110644 2936,172.005256 2936,162.5 C2936,152.994744 2939.35283,144.889356 2946.05859,138.183594 C2952.76436,131.477831 2960.86974,128.125 2970.375,128.125 C2979.75005,128.125 2987.82288,131.510383 2994.59375,138.28125 L3004.75,128.125 L3004.75,158.203125 L2974.67188,158.203125 L2988.34375,144.53125 C2983.39581,139.322891 2977.40629,136.71875 2970.375,136.71875 C2963.21351,136.71875 2957.12633,139.225235 2952.11328,144.238281 C2947.10024,149.251327 2944.59375,155.338506 2944.59375,162.5 C2944.59375,169.661494 2947.10024,175.748673 2952.11328,180.761719 C2957.12633,185.774765 2963.21351,188.28125 2970.375,188.28125 Z\" id=\"ion-android-refresh---Ionicons\" transform=\"translate(2970.375000, 162.500000) scale(-1, 1) translate(-2970.375000, -162.500000) \"></path>\n          </g>\n        </g>\n      </svg>\n    </button>\n  </header>\n\n  <section class=\"intro\" *ngIf=\"!data.started\">\n    <button class=\"large\" (click)=\"start();\">Suche starten</button>\n    <p>Beantworte Fragen und finde das richtige Museum für einen Ausflug.</p>\n  </section>\n\n  <section class=\"questions\" *ngIf=\"data.started\">\n    <div class=\"placeholder\" [style.margin-left]=\"getQuestionsOffset()\"></div>\n    <question-1></question-1>\n    <question-2></question-2>\n    <question-3></question-3>\n    <question-4></question-4>\n    <question-5></question-5>\n    <results></results>\n    <paginator *ngIf=\"data.currentQuestion <= data.countQuestions\"></paginator>\n  </section>\n\n\n  <footer>\n    <article>\n      <h2 id=\"about\">\n        <a href=\"#about\">\n          Über das Projekt\n          <br />\n          <svg width=\"13px\" height=\"9px\" viewBox=\"0 0 13 9\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n            <g transform=\"translate(-1870.000000, -1337.000000)\" fill=\"currentColor\">\n              <polygon points=\"1881.75781 1337.75 1882.5 1338.57031 1876.25 1345.25 1870 1338.57031 1870.74219 1337.75 1876.25 1343.60938\"></polygon>\n            </g>\n          </svg>\n        </a>\n      </h2>\n\n      <p>Lorem Ipsum.</p>\n      <p>Lorem Ipsum.</p>\n      <p>Lorem Ipsum.</p>\n      <p>Lorem Ipsum.</p>\n      <p>Lorem Ipsum.</p>\n      <p>Lorem Ipsum.</p>\n      <p>Lorem Ipsum.</p><p>Lorem Ipsum.</p>\n      <p>Lorem Ipsum.</p>\n    </article>\n  </footer>\n</div>"
 
 /***/ }),
 
@@ -31,19 +31,29 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var Data = (function () {
     function Data() {
         this.started = false;
+        this.countQuestions = 5;
         this.currentQuestion = 0;
     }
     Data.prototype.start = function () {
         this.started = true;
     };
-    Data.prototype.end = function () {
+    Data.prototype.restart = function () {
         this.started = true;
+        this.clear();
+        this.currentQuestion = 1;
+    };
+    Data.prototype.end = function () {
+        this.started = false;
+        this.clear();
+        this.currentQuestion = 0;
     };
     Data.prototype.next = function () {
         this.currentQuestion = this.currentQuestion + 1;
     };
     Data.prototype.prev = function () {
         this.currentQuestion = this.currentQuestion - 1;
+    };
+    Data.prototype.clear = function () {
     };
     return Data;
 }());
@@ -95,7 +105,7 @@ var _a;
 /***/ 158:
 /***/ (function(module, exports) {
 
-module.exports = "<h2>Question 1</h2>"
+module.exports = "<h2>1. In Welche Richtung soll es gehen?</h2>\n\n<button (click)=\"data.next()\" class=\"default\">Weiter</button>"
 
 /***/ }),
 
@@ -250,28 +260,28 @@ var _a;
 /***/ 163:
 /***/ (function(module, exports) {
 
-module.exports = "<h2>Question 2</h2>"
+module.exports = "<h2>2. Welche Bezirke kommen in Frage?</h2>\n\n<button (click)=\"data.next()\" class=\"default\">Weiter</button>"
 
 /***/ }),
 
 /***/ 164:
 /***/ (function(module, exports) {
 
-module.exports = "<h2>Question 3</h2>"
+module.exports = "<h2>3. Wähle Merkmale sind für dich relevant?</h2>\n\n<button (click)=\"data.next()\" class=\"default\">Weiter</button>"
 
 /***/ }),
 
 /***/ 165:
 /***/ (function(module, exports) {
 
-module.exports = "<h2>Question 4</h2>"
+module.exports = "<h2>4. Interessierst du dich eher für große, bekannte oder kleinere, spezielle Museen?</h2>\n\n<button (click)=\"data.next()\" class=\"default\">Weiter</button>"
 
 /***/ }),
 
 /***/ 166:
 /***/ (function(module, exports) {
 
-module.exports = "<h2>Question 5</h2>"
+module.exports = "<h2>5. Beschreibe in einigen Sätzen, was du gerne sehen möchtest.</h2>\n\n<button (click)=\"data.next()\" class=\"default\">Museum finden</button>"
 
 /***/ }),
 
@@ -296,9 +306,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var Paginator = (function () {
     function Paginator(data) {
         this.data = data;
-        this.count = 5;
         this.items = [];
-        for (var i = 0; i < this.count; i++) {
+        for (var i = 0; i < this.data.countQuestions; i++) {
             this.items.push(i);
         }
     }
@@ -363,14 +372,14 @@ var _a;
 /***/ 169:
 /***/ (function(module, exports) {
 
-module.exports = "<button (click)=\"goTo(cur)\" *ngFor=\"let item of items; let cur=index\" [class]=\"itemClass(cur+1)\"></button>\n<br />\n<p>Frage {{ data.currentQuestion }} / {{ count }}</p>"
+module.exports = "<button (click)=\"goTo(cur)\" *ngFor=\"let item of items; let cur=index\" [class]=\"itemClass(cur+1)\"></button>\n<br />\n<p>Frage {{ data.currentQuestion }} / {{ data.countQuestions }}</p>"
 
 /***/ }),
 
 /***/ 170:
 /***/ (function(module, exports) {
 
-module.exports = "<h2>Results</h2>"
+module.exports = "<h2>Gefundene Museen</h2>"
 
 /***/ }),
 
@@ -452,8 +461,15 @@ var AppComponent = (function () {
     };
     AppComponent.prototype.end = function () {
         if (this.data.started) {
-            if (confirm('Aktuelle Suche abgebrochen und zur Startseite zurückkehren?')) {
+            if (confirm('Aktuelle Suche abbrechen und zur Startseite zurückkehren?')) {
                 this.data.end();
+            }
+        }
+    };
+    AppComponent.prototype.restart = function () {
+        if (this.data.started) {
+            if (confirm('Soll eine neue Suche gestartet werden?')) {
+                this.data.restart();
             }
         }
     };
