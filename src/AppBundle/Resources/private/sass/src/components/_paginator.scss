@@ -1,0 +1,36 @@
+
+section.questions > paginator {
+  position: fixed;
+  bottom: 0;
+  left: 20px;
+  right: 20px;
+  top: auto;
+  height: auto;
+  width: auto;
+  display: block;
+  text-align: center;
+
+  button {
+    background: none;
+    border-radius: 100%;
+    width: 12px;
+    height: 12px;
+    padding: 0;
+    margin: 0 10px 10px;
+    border: 1px solid white;
+    outline: none;
+
+    &.active {
+      background: white;
+    }
+  }
+
+  p {
+    @include font-size(10);
+    opacity: 1;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+  }
+}

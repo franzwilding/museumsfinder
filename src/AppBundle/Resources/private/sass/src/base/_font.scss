@@ -20,6 +20,7 @@ p {
   font-weight: normal;
   @include font-size(15);
   line-height: 155%;
+  opacity: 0.75;
 }
 
 a {

@@ -7,37 +7,73 @@ body {
   background: url('../img/bg.jpg') no-repeat;
   background-size: cover;
 
-  > header {
-    text-align: center;
-    margin: 50px 10px;
-    height: 30vh;
-
-    .logo {
-      color: $gold;
-      max-width: 108px;
-      width: 22.5%;
-      height: auto;
-      display: inline-block;
-      margin-bottom: 20px;
-    }
-  }
-
-  > app {
-    display: block;
-    height: 37vh;
-  }
-
-  > footer {
-    margin: 20px;
-    padding-top: 10px;
-    h2:first-child {
+  .app-inner {
+    > header {
       text-align: center;
-      margin-bottom: 50px;
+      height: 40vh;
+      position: absolute;
+      top: 10vh;
+      left: 20px;
+      right: 20px;
+      transition: all 0.15s ease-in-out;
 
-      a {
-        display: block;
-        opacity: 1;
-        text-decoration: none;
+      .logo {
+        color: $gold;
+        max-width: 108px;
+        width: 22.5%;
+        height: auto;
+        display: inline-block;
+        margin-bottom: 20px;
+      }
+    }
+
+    > .intro {
+      display: block;
+      height: 40vh;
+      top: 50vh;
+      left: 20px;
+      right: 20px;
+      position: absolute;
+    }
+
+    > footer {
+      margin: 87vh 0 0 0;
+      padding-top: 10px;
+
+      h2:first-child {
+        text-align: center;
+        margin-bottom: 50px;
+
+        a {
+          display: block;
+          opacity: 1;
+          text-decoration: none;
+        }
+      }
+    }
+
+    &.started {
+      > header {
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 50px;
+        border-bottom: 1px solid rgba(255,255,255,0.25);
+
+        .logo {
+          height: 20px;
+          width: auto;
+          margin: 15px;
+          vertical-align: middle;
+        }
+
+        h1 {
+          display: none;
+        }
+      }
+
+      > footer {
+        display: none;
       }
     }
   }

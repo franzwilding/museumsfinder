@@ -1,0 +1,3 @@
+<button (click)="goTo(cur)" *ngFor="let item of items; let cur=index" [class]="itemClass(cur+1)"></button>
+<br />
+<p>Frage {{ data.currentQuestion }} / {{ count }}</p>

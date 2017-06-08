@@ -1,0 +1,17 @@
+
+button.large {
+  border: 2px solid $gold;
+  background: none;
+  outline: none;
+  color: $gold;
+  @include font-size(20);
+  padding: 8px 30px;
+  border-radius: 50px;
+  line-height: 100%;
+  cursor: pointer;
+
+  @media #{$tablet} {
+    @include font-size(30);
+    padding: 10px 50px 13px;
+  }
+}

@@ -1,3 +1,62 @@
-<h1>
-  {{title}}
-</h1>
+<div [class]="getClasses()">
+  <header (click)="end();">
+    <svg class="logo" width="104px" height="102px" viewBox="0 0 104 102" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <g transform="translate(-1261.000000, -176.000000)" fill="currentColor">
+        <g transform="translate(1259.000000, 174.000000)">
+          <rect x="9" y="100.985507" width="90" height="3.01449275"></rect>
+          <g>
+            <rect opacity="0.5" x="15" y="60.2898551" width="7.5" height="34.6666667"></rect>
+            <rect opacity="0.75" x="33" y="48.2318841" width="7.5" height="47.2270531"></rect>
+            <rect x="51" y="39.1884058" width="7.5" height="56.9103777"></rect>
+            <rect opacity="0.75" x="69" y="45.2173913" width="7.5" height="50.2415459"></rect>
+            <rect opacity="0.5" x="87" y="63.3043478" width="7.5" height="31.6521739"></rect>
+            <path d="M100.493467,56.5712702 C101.664379,57.7478392 103.561667,57.7489808 104.73269,56.5723009 L104.91391,56.3902055 C106.084256,55.2142057 106.090014,53.313319 104.921325,52.1389849 L56.1116833,3.09354749 C54.9454328,1.92166297 53.0570049,1.91921347 51.8883167,3.09354749 L3.07867467,52.1389849 C1.91242421,53.3108695 1.91506732,55.2135255 3.08609011,56.3902055 L3.2673101,56.5723009 C4.43765599,57.7483006 6.33568609,57.7477736 7.50653321,56.5712702 L51.8798756,11.9835639 C53.050788,10.8069949 54.9492773,10.8070605 56.1201244,11.9835639 L100.493467,56.5712702 Z"></path>
+          </g>
+        </g>
+      </g>
+    </svg>
+    <h1>Museen & Sammlungen in Wien</h1>
+  </header>
+
+  <section class="intro" *ngIf="!data.started">
+    <button class="large" (click)="start();">Suche starten</button>
+    <p>Beantworte Fragen und finde das richtige Museum für einen Ausflug.</p>
+  </section>
+
+  <section class="questions" *ngIf="data.started">
+    <div class="placeholder" [style.margin-left]="getQuestionsOffset()"></div>
+    <question-1></question-1>
+    <question-2></question-2>
+    <question-3></question-3>
+    <question-4></question-4>
+    <question-5></question-5>
+    <results></results>
+    <paginator></paginator>
+  </section>
+
+
+  <footer>
+    <article>
+      <h2 id="about">
+        <a href="#about">
+          Über das Projekt
+          <br />
+          <svg width="13px" height="9px" viewBox="0 0 13 9" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g transform="translate(-1870.000000, -1337.000000)" fill="currentColor">
+              <polygon points="1881.75781 1337.75 1882.5 1338.57031 1876.25 1345.25 1870 1338.57031 1870.74219 1337.75 1876.25 1343.60938"></polygon>
+            </g>
+          </svg>
+        </a>
+      </h2>
+
+      <p>Lorem Ipsum.</p>
+      <p>Lorem Ipsum.</p>
+      <p>Lorem Ipsum.</p>
+      <p>Lorem Ipsum.</p>
+      <p>Lorem Ipsum.</p>
+      <p>Lorem Ipsum.</p>
+      <p>Lorem Ipsum.</p><p>Lorem Ipsum.</p>
+      <p>Lorem Ipsum.</p>
+    </article>
+  </footer>
+</div>
