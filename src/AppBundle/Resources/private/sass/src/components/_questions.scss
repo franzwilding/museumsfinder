@@ -25,4 +25,151 @@ section.questions {
       margin-bottom: 20px;
     }
   }
+
+  question-2 {
+    svg.map {
+      max-width: 100%;
+    }
+
+    .select-label {
+      display: block;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      margin-top: -20px;
+      width: 100%;
+      max-width: none;
+
+      svg {
+        display: inline-block;
+      }
+
+      span {
+        height: 30px;
+        display: inline-block;
+        width: 30px;
+        line-height: 32px;
+        border: 2px solid $green;
+        border-radius: 100%;
+        color: $green;
+      }
+
+      select {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    ul {
+      border-top: 1px solid rgba(255,255,255,0.25);
+      margin-top: 20px;
+      padding-top: 5px;
+
+      li {
+        display: inline-block;
+        border: 1px solid white;
+        border-radius: 50px;
+        padding: 3px 3px 3px 10px;
+        margin: 5px;
+        font-size: 12px;
+
+        button {
+          display: inline-block;
+          border: none;
+          color: white;
+          background: $red;
+          border-radius: 100%;
+          padding: 0;
+          text-align: center;
+          width: 16px;
+          height: 16px;
+          margin-left: 5px;
+        }
+      }
+    }
+  }
+
+  question-1, question-2, question-3, question-4 {
+
+    overflow: auto;
+
+    form {
+      margin: 0 -10px 40px;
+      overflow: auto;
+    }
+
+    label {
+      width: 150px;
+      display: inline-block;
+      box-sizing: border-box;
+      text-align: center;
+      max-width: 50%;
+      @include font-size(18);
+
+      span {
+        position: relative;
+        display: block;
+        height: 98px;
+        border: 1px solid white;
+        vertical-align: middle;
+        line-height: 98px;
+        margin: 5px;
+      }
+
+      input {
+        position: absolute;
+        top: -500px;
+        left: -100px;
+      }
+
+      svg {
+        display: none;
+      }
+
+      &.active {
+
+        span {
+          height: 90px;
+          border: 5px solid $green;
+          line-height: 90px;
+        }
+
+        svg {
+          display: block;
+          position: absolute;
+          right: 10px;
+          bottom: 10px;
+
+          path {
+            fill: $green;
+          }
+        }
+      }
+    }
+  }
+
+  question-5 {
+    textarea {
+      width: 100%;
+      max-width: 400px;
+      border: 1px solid white;
+      opacity: 1;
+      resize: none;
+      height: 250px;
+      color: white;
+      margin-bottom: 30px;
+      background: none;
+      font-size: 15px;
+      padding: 10px 15px;
+      box-sizing: border-box;
+      outline: none;
+      line-height: 150%;
+    }
+  }
 }

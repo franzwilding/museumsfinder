@@ -33,21 +33,26 @@
     </g>
   </svg>
 
-  <select (change)="selectChanged($event)">
-    <option>+</option>
-    <option [value]="d" *ngFor="let d of availableDistrictNumbers()">{{ districtNames[d] }}</option>
-  </select>
+  <label class="select-label" for="districtSelect">
+    <span>
+      <svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <polygon id="ion-plus---Ionicons" fill="currentColor" points="13.5 6.125 13.5 8.375 7.875 8.375 7.875 14 5.625 14 5.625 8.375 0 8.375 0 6.125 5.625 6.125 5.625 0.5 7.875 0.5 7.875 6.125"></polygon>
+      </svg>
+    </span>
+    <select id="districtSelect" (change)="selectChanged($event)">
+      <option>+</option>
+      <option [value]="d" *ngFor="let d of availableDistrictNumbers()">{{ districtNames[d] }}</option>
+    </select>
+  </label>
 
   <ul>
     <li *ngFor="let d of orderedSelectedDistricts()">
+      {{ districtNames[d] }}
       <button (click)="removeDistrict(d)">
-        <svg width="10px" height="3px" viewBox="0 0 10 3" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-            <polygon id="ion-android-remove-circle---Ionicons" fill="#000000" points="9.3046875 2.3203125 9.3046875 0.6796875 0.9453125 0.6796875 0.9453125 2.3203125"></polygon>
-          </g>
+        <svg width="10px" height="10px" viewBox="0 0 10 3" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <polygon fill="currentColor" points="9.3046875 2.3203125 9.3046875 0.6796875 0.9453125 0.6796875 0.9453125 2.3203125"></polygon>
         </svg>
       </button>
-      {{ districtNames[d] }}
     </li>
   </ul>
 
