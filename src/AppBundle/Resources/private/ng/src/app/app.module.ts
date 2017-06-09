@@ -15,6 +15,8 @@ import { Question5 } from '../components/question5/question-5.component';
 import { Paginator } from '../components/paginator/paginator.component';
 import { Results } from '../components/results/results.component';
 
+import { NouisliderModule } from 'ng2-nouislider';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,7 +31,8 @@ import { Results } from '../components/results/results.component';
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    NouisliderModule
   ],
   providers: [
     Data

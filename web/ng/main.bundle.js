@@ -38,7 +38,7 @@ module.exports = "<h2>3. Wähle Merkmale sind für dich relevant?</h2>\n\n<form>
 /***/ 144:
 /***/ (function(module, exports) {
 
-module.exports = "<h2>4. Interessierst du dich eher für große, bekannte oder kleinere, spezielle Museen?</h2>\n\n<form>\n  <input type=\"range\" step=\"1\" min=\"0\" max=\"100\" [value]=\"data.uniqueness\" (change)=\"change($event)\" />\n</form>\n\n<button (click)=\"data.next()\" class=\"default\">Weiter</button>"
+module.exports = "<h2>4. Interessierst du dich eher für große, bekannte oder kleinere, spezielle Museen?</h2>\n\n<form>\n  <nouislider name=\"uniqueness\" [step]=\"1\" [min]=\"0\" [max]=\"100\" [(ngModel)]=\"data.uniqueness\" (ngModelChange)=\"change($event)\"></nouislider>\n  <span class=\"left\">Speziell</span>\n  <span class=\"right\">Klassisch</span>\n</form>\n\n<button (click)=\"data.next()\" class=\"default\">Weiter</button>"
 
 /***/ }),
 
@@ -123,7 +123,7 @@ var Data = (function () {
         this.categories = [];
         this.districts = [];
         this.tags = [];
-        this.uniqueness = 0;
+        this.uniqueness = 50;
         this.searchText = '';
         this.onCurrentQuestionChange = new __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__["Observable"](function (observer) { _this.observer = observer; });
         this.onCurrentQuestionChange.subscribe();
@@ -164,7 +164,7 @@ var Data = (function () {
         this.categories = [];
         this.districts = [];
         this.tags = [];
-        this.uniqueness = 0;
+        this.uniqueness = 50;
         this.searchText = '';
     };
     Data.prototype.getSearchData = function () {
@@ -192,7 +192,7 @@ var Data = (function () {
     return Data;
 }());
 Data = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Injectable */])(),
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object])
 ], Data);
 
@@ -229,7 +229,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 if (__WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].production) {
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["a" /* enableProdMode */])();
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["enableProdMode"])();
 }
 __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_2__app_app_module__["a" /* AppModule */]);
 //# sourceMappingURL=main.js.map
@@ -294,7 +294,7 @@ var AppComponent = (function () {
     return AppComponent;
 }());
 AppComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_4" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app',
         template: __webpack_require__(139)
     }),
@@ -323,6 +323,8 @@ var _a;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_question5_question_5_component__ = __webpack_require__(84);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_paginator_paginator_component__ = __webpack_require__(79);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_results_results_component__ = __webpack_require__(85);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_ng2_nouislider__ = __webpack_require__(177);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_ng2_nouislider___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13_ng2_nouislider__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -343,13 +345,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
 var AppModule = (function () {
     function AppModule() {
     }
     return AppModule;
 }());
 AppModule = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["b" /* NgModule */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["NgModule"])({
         declarations: [
             __WEBPACK_IMPORTED_MODULE_4__app_component__["a" /* AppComponent */],
             __WEBPACK_IMPORTED_MODULE_6__components_question1_question_1_component__["a" /* Question1 */],
@@ -362,8 +365,9 @@ AppModule = __decorate([
         ],
         imports: [
             __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormsModule */],
-            __WEBPACK_IMPORTED_MODULE_3__angular_http__["a" /* HttpModule */]
+            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["FormsModule"],
+            __WEBPACK_IMPORTED_MODULE_3__angular_http__["a" /* HttpModule */],
+            __WEBPACK_IMPORTED_MODULE_13_ng2_nouislider__["NouisliderModule"]
         ],
         providers: [
             __WEBPACK_IMPORTED_MODULE_5__data__["a" /* Data */]
@@ -411,7 +415,7 @@ var Paginator = (function () {
     return Paginator;
 }());
 Paginator = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_4" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'paginator',
         template: __webpack_require__(140)
     }),
@@ -466,7 +470,7 @@ var Question1 = (function () {
     return Question1;
 }());
 Question1 = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_4" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'question-1',
         template: __webpack_require__(141)
     }),
@@ -559,7 +563,7 @@ var Question2 = (function () {
     return Question2;
 }());
 Question2 = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_4" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'question-2',
         template: __webpack_require__(142)
     }),
@@ -611,7 +615,7 @@ var Question3 = (function () {
     return Question3;
 }());
 Question3 = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_4" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'question-3',
         template: __webpack_require__(143)
     }),
@@ -645,13 +649,13 @@ var Question4 = (function () {
     function Question4(data) {
         this.data = data;
     }
-    Question4.prototype.change = function (event) {
-        this.data.uniqueness = event.target.value;
+    Question4.prototype.change = function (value) {
+        this.data.uniqueness = value;
     };
     return Question4;
 }());
 Question4 = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_4" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'question-4',
         template: __webpack_require__(144)
     }),
@@ -691,7 +695,7 @@ var Question5 = (function () {
     return Question5;
 }());
 Question5 = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_4" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'question-5',
         template: __webpack_require__(145)
     }),
@@ -761,7 +765,7 @@ var Results = (function () {
     return Results;
 }());
 Results = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_4" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'results',
         template: __webpack_require__(146)
     }),

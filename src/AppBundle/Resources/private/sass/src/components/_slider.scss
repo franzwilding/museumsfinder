@@ -1,0 +1,33 @@
+
+nouislider {
+  display: block;
+  margin: 20px 30px;
+
+  .noUi-target.noUi-horizontal {
+    height: 9px;
+    background: url('../img/slider_bg.svg') repeat-x center;
+    position: relative;
+    touch-action: none;
+    user-select: none;
+    box-sizing: border-box;
+
+    .noUi-origin {
+      position: absolute;
+      height: 0;
+      width: 0;
+    }
+
+    .noUi-handle {
+      position: relative;
+      width: 32px;
+      height: 32px;
+      border: 2px solid white;
+      background: $green;
+      border-radius: 100%;
+      box-shadow: 0 4px 9px 0 rgba(0,0,0,0.27);
+      transform: translate3d(0, 0, 0);
+      top: -16px;
+      left: -16px;
+    }
+  }
+}

@@ -42,7 +42,7 @@ export class Data {
   public categories : string[] = [];
   public districts : string[] = [];
   public tags : string[] = [];
-  public uniqueness : number = 0;
+  public uniqueness : number = 50;
   public searchText : string = '';
 
   public constructor(private http : Http) {
@@ -93,7 +93,7 @@ export class Data {
     this.categories = [];
     this.districts = [];
     this.tags = [];
-    this.uniqueness = 0;
+    this.uniqueness = 50;
     this.searchText = '';
   }
 

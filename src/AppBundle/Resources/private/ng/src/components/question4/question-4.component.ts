@@ -9,7 +9,7 @@ export class Question4 {
 
   constructor(private data: Data) {}
 
-  change(event) : void {
-    this.data.uniqueness = event.target.value;
+  change(value) : void {
+    this.data.uniqueness = value;
   }
 }
