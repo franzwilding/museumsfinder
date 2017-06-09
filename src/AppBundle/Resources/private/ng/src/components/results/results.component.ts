@@ -24,12 +24,25 @@ export class Results {
   find() : void {
     this.result = [];
     this.loading = true;
-    this.data.find().subscribe((result : Museum[]) => {
-      this.result = result;
-      this.loading = false;
+    this.data.find().then((result : Museum[]) => {
+
+      setTimeout(() => {
+        this.result = result;
+        this.loading = false;
+      }, 500);
+
     }, () => {
       alert("Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.");
       this.data.goTo(this.data.countQuestions);
+    });
+  }
+
+  sendFeedback(museum : Museum) : void {
+    this.data.sendFeedback(museum).subscribe(() => {
+      alert("Danke für dein Feedback!");
+    }, () => {
+      alert("Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.");
+      museum.rating = 0;
     });
   }
 }

@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -19,6 +20,8 @@ class Museum
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @Groups({"public"})
      */
     private $id;
 
@@ -26,6 +29,8 @@ class Museum
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, unique=true)
+     *
+     * @Groups({"public"})
      */
     private $name;
 
@@ -40,6 +45,8 @@ class Museum
      * @var string
      *
      * @ORM\Column(name="address", type="string", length=255)
+     *
+     * @Groups({"public"})
      */
     private $address;
 
@@ -47,6 +54,8 @@ class Museum
      * @var int
      *
      * @ORM\Column(name="district", type="integer")
+     *
+     * @Groups({"public"})
      */
     private $district;
 
@@ -54,6 +63,8 @@ class Museum
      * @var string
      *
      * @ORM\Column(name="web", type="string", length=255, nullable=true)
+     *
+     * @Groups({"public"})
      */
     private $web;
 
@@ -61,6 +72,8 @@ class Museum
      * @var string
      *
      * @ORM\Column(name="category", type="string", length=255)
+     *
+     * @Groups({"public"})
      */
     private $category;
 
@@ -81,6 +94,20 @@ class Museum
     public function __construct()
     {
         $this->libraries = new ArrayCollection();
+    }
+
+    /**
+     * Set id
+     *
+     * @param int $id
+     *
+     * @return Museum
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     /**

@@ -34,11 +34,11 @@ class Feature
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\MuseumFeature", mappedBy="feature", cascade={"persist", "remove"})
      */
-    private $libraries;
+    private $museums;
 
     public function __construct()
     {
-        $this->libraries = new ArrayCollection();
+        $this->museums = new ArrayCollection();
     }
 
     /**
@@ -78,19 +78,19 @@ class Feature
     /**
      * @return ArrayCollection|Museum[]
      */
-    public function getLibraries()
+    public function getMuseums()
     {
-        return $this->libraries;
+        return $this->museums;
     }
 
     /**
-     * @param ArrayCollection|Museum[] $libraries
+     * @param ArrayCollection|Museum[] $museums
      *
      * @return Feature
      */
-    public function setLibraries($libraries)
+    public function setMuseums($museums)
     {
-        $this->libraries = $libraries;
+        $this->museums = $museums;
 
         return $this;
     }

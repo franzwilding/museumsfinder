@@ -6,12 +6,21 @@ import 'rxjs/add/operator/map';
 
 export class Museum {
   public id : number = 0;
-  public title : string = "";
+  public name : string = "";
   public rating : number = 0;
-  public website : string = "";
+  public web : string = "";
   public matching : number = 0;
   public address : string = "";
   public open : boolean = false;
+
+  constructor(data : any) {
+    this.id = data.id;
+    this.name = data.name;
+    this.web = data.web;
+    this.matching = data.matching;
+    this.address = data.address;
+    this.open = data.open;
+  }
 
   public matchingClass() : string {
     return '';
@@ -21,7 +30,8 @@ export class Museum {
 @Injectable()
 export class Data {
 
-  private searchUrl : string = "";
+  private findUrl : string = "/results";
+  private feedbackUrl : string = "/feedback";
 
   public started : boolean = false;
   public countQuestions : number = 5;
@@ -97,7 +107,18 @@ export class Data {
     };
   }
 
-  public find() : Observable<Museum[]> {
-    return this.http.post(this.searchUrl, this.getSearchData()).map((res:Response) => <Museum[]>res.json());
+  public find() : Promise<Museum[]> {
+
+    return new Promise((resolve, reject) => {
+      this.http.post(this.findUrl, this.getSearchData()).subscribe((response : Response) => {
+        resolve(response.json().map((data : any) => { return new Museum(data); }));
+      }, (response : Response) => { reject(); });
+    });
+  }
+
+  public sendFeedback(museum : Museum) : Observable<any> {
+    let data = this.getSearchData();
+    data.rating = museum.rating;
+    return this.http.post(this.feedbackUrl, data);
   }
 }

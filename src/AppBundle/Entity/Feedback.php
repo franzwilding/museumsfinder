@@ -38,13 +38,13 @@ class Feedback
     /**
      * @var array
      *
-     * @ORM\Column(name="features", type="array")
+     * @ORM\Column(name="parameters", type="array")
      */
-    private $features;
+    private $parameters;
 
     public function __construct()
     {
-        $this->features = [];
+        $this->parameters = [];
     }
 
     /**
@@ -106,27 +106,27 @@ class Feedback
     }
 
     /**
-     * Set features
+     * Set parameters
      *
-     * @param array $features
+     * @param array $parameters
      *
      * @return Feedback
      */
-    public function setFeatures($features)
+    public function setParameters($parameters)
     {
-        $this->features = $features;
+        $this->parameters = $parameters;
 
         return $this;
     }
 
     /**
-     * Get features
+     * Get parameters
      *
      * @return array
      */
-    public function getFeatures()
+    public function getParameters()
     {
-        return $this->features;
+        return $this->parameters;
     }
 }
 
