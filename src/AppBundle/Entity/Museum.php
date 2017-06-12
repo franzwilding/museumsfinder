@@ -85,15 +85,23 @@ class Museum
     private $prominence;
 
     /**
-     * @var ArrayCollection|Feature[]
+     * @var MuseumFeature[]
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\MuseumFeature", mappedBy="museum", cascade={"persist", "remove"})
      */
     private $features;
 
+    /**
+     * @var Feedback[]
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Feedback", mappedBy="museum")
+     */
+    private $feedback;
+
     public function __construct()
     {
-        $this->libraries = new ArrayCollection();
+        $this->features = new ArrayCollection();
+        $this->feedback = new ArrayCollection();
     }
 
     /**
@@ -289,7 +297,7 @@ class Museum
     }
 
     /**
-     * @return ArrayCollection|Feature[]
+     * @return MuseumFeature[]
      */
     public function getFeatures()
     {
@@ -297,13 +305,33 @@ class Museum
     }
 
     /**
-     * @param ArrayCollection|Feature[] $features
+     * @param MuseumFeature[] $features
      *
      * @return Museum
      */
     public function setFeatures($features)
     {
         $this->features = $features;
+
+        return $this;
+    }
+
+    /**
+     * @return Feedback[]
+     */
+    public function getFeedback()
+    {
+        return $this->feedback;
+    }
+
+    /**
+     * @param Feedback $feedback
+     *
+     * @return Museum
+     */
+    public function addFeedback($feedback)
+    {
+        $this->feedback->add($feedback);
 
         return $this;
     }

@@ -58,7 +58,7 @@ class MuseumInformation {
      */
     public function findProminence(Museum $museum, $append = true) : float {
         $prominence = $this->museumProminence[$museum->getFid()] ?? 0.5;
-        
+
         if($append) {
             $museum->setProminence($prominence);
         }
