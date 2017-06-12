@@ -1,0 +1,7 @@
+
+# This file holds fixed information for museums.
+parameters:
+    museum_categories:
+        MUSEUMOGD.54081: Wien
+    museum_prominence:
+        MUSEUMOGD.54081: 0.25

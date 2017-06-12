@@ -1,5 +1,6 @@
 imports:
     - { resource: parameters.yml }
+    - { resource: museum_information.yml }
     - { resource: security.yml }
     - { resource: services.yml }
 
@@ -7,6 +8,7 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: de
+    dataset: "/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:MUSEUMOGD&srsName=EPSG:4326&outputFormat=json"
 
 framework:
     #esi: ~
@@ -68,3 +70,18 @@ swiftmailer:
     username: '%mailer_user%'
     password: '%mailer_password%'
     spool: { type: memory }
+
+guzzle:
+    logging: true
+
+    clients:
+        open_data:
+            base_url: "http://data.wien.gv.at"
+            options:
+                headers:
+                    Accept: "application/json"
+
+        web_crawler:
+            options:
+                headers:
+                    Accept: "text/html"
