@@ -25,6 +25,8 @@ class ImportMuseumsCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $museumRepo = $this->getContainer()->get('doctrine.orm.default_entity_manager')->getRepository('AppBundle:Museum');
+
         $total = 0;
         $imported = 0;
         $additional = 0;
@@ -56,44 +58,37 @@ class ImportMuseumsCommand extends ContainerAwareCommand
 
 
 
-
-        $output->writeln('');
-        $output->writeln('Clear existing museum entries...');
-        foreach($this->getContainer()->get('doctrine.orm.default_entity_manager')->getRepository('AppBundle:Museum')->findAll() as $museum) {
-            $this->getContainer()->get('doctrine.orm.default_entity_manager')->remove($museum);
-        }
-
-        $this->getContainer()->get('doctrine.orm.default_entity_manager')->flush();
-        $output->writeln(['<info>[SUCCESS]</info> Cleared existing museums.', '']);
-
-
-
-
-
         $output->writeln('');
         $output->writeln(['Importing museums...', '']);
+        $urlFixes = $this->getContainer()->getParameter('museum_url_fix');
         foreach($list as $m) {
             try {
-                $museum = new Museum();
+                $web = array_key_exists($m->id, $urlFixes) ? $urlFixes[$m->id] : $m->properties->WEITERE_INF;
+                $museum = $museumRepo->findOneBy(['fid' => $m->id]) ?? new Museum();
                 $museum
                     ->setFid($m->id)
-                    ->setWeb($m->properties->WEITERE_INF)
+                    ->setWeb($web)
                     ->setName($m->properties->NAME)
                     ->setDistrict($m->properties->BEZIRK)
                     ->setAddress($m->properties->ADRESSE);
 
                 $museumInformation->findCategory($museum);
-                $museumInformation->findProminence($museum);
+                $museumInformation->findUniqueness($museum);
 
-                $this->getContainer()->get('doctrine.orm.default_entity_manager')->persist($museum);
+                if(!$museum->getId()) {
+                    $this->getContainer()->get('doctrine.orm.default_entity_manager')->persist($museum);
+                }
+
                 $output->write('.');
                 $imported++;
                 $museums[] = $museum;
+
             } catch (\Exception $e) {
                 $output->writeln('<error>Error: Could not save museum to database. Exception: ' . $e->getMessage() . '</error>');
             }
         }
 
+        $this->getContainer()->get('doctrine.orm.default_entity_manager')->flush();
         $output->writeln(['', "<info>[SUCCESS]</info> Imported <info>$imported</info> out of <info>$total</info> museums.", '']);
 
 
@@ -101,7 +96,8 @@ class ImportMuseumsCommand extends ContainerAwareCommand
 
 
         $output->writeln('');
-        $output->writeln(['Fetching additional information from website...', '']);
+        $output->writeln(['Fetching additional information for the next 10 museums from website...', '']);
+        $museums = $museumRepo->findBy([], ['webCrawled' => 'ASC'], 10);
         foreach($museums as $museum) {
             if(count($museumInformation->findFeatures($museum)) > 0) {
                 $additional++;

@@ -13,6 +13,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Feature
 {
+    CONST FEATURE_FREIER_EINTRITT = 'Freier Eintritt';
+    const FEATURE_BARRIEREFREI = 'Barrierefrei';
+    const FEATURE_ENGLISCH = 'Englisch';
+
     /**
      * @var int
      *

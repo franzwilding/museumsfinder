@@ -3,6 +3,10 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Museum;
+use Elastica\Query;
+use Elastica\Query\Match;
+use Elastica\Rescore\Query as QueryRescore;
+use Elastica\Script\Script;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -10,23 +14,23 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
-    private function getResultsForm() : FormBuilder {
+    private function getResultsForm() : FormBuilderInterface {
         return $this->createFormBuilder(NULL, ['csrf_protection'   => false])
-            ->add('categories', ChoiceType::class, ['multiple' => true])
-            ->add('tags', ChoiceType::class, ['multiple' => true])
-            ->add('districts', ChoiceType::class, ['multiple' => true])
+            ->add('categories', ChoiceType::class, ['multiple' => true, 'choices' => ['Wien']])
+            ->add('tags', ChoiceType::class, ['multiple' => true, 'choices' => ['Barrierefrei']])
+            ->add('districts', ChoiceType::class, ['multiple' => true, 'choices' => [10]])
             ->add('uniqueness', NumberType::class)
             ->add('searchText', TextareaType::class);
     }
 
-    private function getFeedbackForm() : FormBuilder {
+    private function getFeedbackForm() : FormBuilderInterface {
         return $this->getResultsForm()->add('rating', NumberType::class);
     }
 
@@ -34,35 +38,55 @@ class DefaultController extends Controller
      * @Route("/", name="homepage")
      * @Template()
      */
-    public function indexAction(Request $request) {
+    public function indexAction() {
         return [];
     }
 
     /**
      * @Route("/results", name="results")
      * @Method("POST")
+     * @param Request $request
+     * @return JsonResponse|Response
      */
     public function resultsAction(Request $request) {
-
-        $museums = [];
         $data = json_decode($request->getContent(), true);
         $form = $this->getResultsForm()->getForm();
         $form->submit($data);
 
-        if($form->isValid() && $form->isSubmitted()) {
-            // TODO: Get museums.
+        if($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
 
-            $m = new Museum();
-            $m
-                ->setId(1)
-                ->setAddress($data['tags'] ? $data['tags'][0] : 'Unknown')
-                ->setCategory($data['categories'] ? $data['categories'][0] : 'Unknown')
-                ->setDistrict($data['districts'] ? $data['districts'][0] : 'Unknown')
-                ->setWeb('http://google.com')
-                ->setName($data['searchText'] ? $data['searchText'] : 'Museum');
-            $museums[] = $m;
+
+            $finder = $this->get('fos_elastica.finder.app.museum');
+            $query = new Query();
+
+            $mainQuery = new Query\BoolQuery();
+            foreach($data['districts'] as $district) {
+                $districtQuery = new Match();
+                $districtQuery->setFieldQuery('district', $district);
+                $mainQuery->addShould($districtQuery);
+            }
+
+            $ltrQuery = new Query([
+                'query' => [
+                    'ltr' => [
+                        'model' => [ 'stored' => 'museum_ltr_model' ],
+                        'features' => [],
+                    ]
+                ]
+            ]);
+            $queryRescore = new QueryRescore($ltrQuery);
+
+            $query->setQuery($mainQuery);
+            $query->setRescore($queryRescore);
+
+            /**
+             * @var Museum[] $museums
+             */
+            $museums = $finder->find($query);
+
         } else {
-            return new JsonResponse((string)$form->getErrors(), 400);
+            return new JsonResponse((string)$form->getErrors(true, true), 400);
         }
 
         return new Response($this->get('serializer')->serialize($museums, 'json', ['groups' => ['public']]));
@@ -71,6 +95,8 @@ class DefaultController extends Controller
     /**
      * @Route("/feedback", name="feedback")
      * @Method("POST")
+     * @param Request $request
+     * @return JsonResponse|Response
      */
     public function feedbackAction(Request $request) {
 

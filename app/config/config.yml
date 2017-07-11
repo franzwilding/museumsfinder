@@ -85,3 +85,22 @@ guzzle:
             options:
                 headers:
                     Accept: "text/html"
+
+fos_elastica:
+    clients:
+        default: { host: localhost, port: 9200 }
+    indexes:
+        app:
+            types:
+                museum:
+                    properties:
+                        name: ~
+                        address: ~
+                        district: ~
+                        web: ~
+                        uniqueness: ~
+                    persistence:
+                        driver: orm
+                        model: AppBundle\Entity\Museum
+                        provider: ~
+                        finder: ~

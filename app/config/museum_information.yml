@@ -2,6 +2,92 @@
 # This file holds fixed information for museums.
 parameters:
     museum_categories:
+
+        # Bezirksmuseum
         MUSEUMOGD.54081: Wien
-    museum_prominence:
-        MUSEUMOGD.54081: 0.25
+        MUSEUMOGD.54082: Wien
+        MUSEUMOGD.54083: Wien
+        MUSEUMOGD.54084: Wien
+        MUSEUMOGD.54085: Wien
+        MUSEUMOGD.54086: Wien
+        MUSEUMOGD.54087: Wien
+        MUSEUMOGD.54088: Wien
+        MUSEUMOGD.54089: Wien
+        MUSEUMOGD.54090: Wien
+        MUSEUMOGD.54091: Wien
+        MUSEUMOGD.54092: Wien
+        MUSEUMOGD.54093: Wien
+        MUSEUMOGD.54114: Wien
+        MUSEUMOGD.54115: Wien
+        MUSEUMOGD.54116: Wien
+        MUSEUMOGD.54117: Wien
+        MUSEUMOGD.54118: Wien
+        MUSEUMOGD.54119: Wien
+        MUSEUMOGD.54120: Wien
+        MUSEUMOGD.54121: Wien
+        MUSEUMOGD.54122: Wien
+        MUSEUMOGD.54123: Wien
+        MUSEUMOGD.54124: Wien
+        MUSEUMOGD.54125: Wien
+    museum_uniqueness:
+
+        # Bezirksmuseum
+        MUSEUMOGD.54081: 0.8
+        MUSEUMOGD.54082: 0.8
+        MUSEUMOGD.54083: 0.8
+        MUSEUMOGD.54084: 0.8
+        MUSEUMOGD.54085: 0.8
+        MUSEUMOGD.54086: 0.8
+        MUSEUMOGD.54087: 0.8
+        MUSEUMOGD.54088: 0.8
+        MUSEUMOGD.54089: 0.8
+        MUSEUMOGD.54090: 0.8
+        MUSEUMOGD.54091: 0.8
+        MUSEUMOGD.54092: 0.8
+        MUSEUMOGD.54093: 0.8
+        MUSEUMOGD.54114: 0.8
+        MUSEUMOGD.54115: 0.8
+        MUSEUMOGD.54116: 0.8
+        MUSEUMOGD.54117: 0.8
+        MUSEUMOGD.54118: 0.8
+        MUSEUMOGD.54119: 0.8
+        MUSEUMOGD.54120: 0.8
+        MUSEUMOGD.54121: 0.8
+        MUSEUMOGD.54122: 0.8
+        MUSEUMOGD.54123: 0.8
+        MUSEUMOGD.54124: 0.8
+        MUSEUMOGD.54125: 0.8
+
+    museum_url_fix:
+        MUSEUMOGD.54081: http://www.bezirksmuseum.at/de/bezirksmuseum_3
+        MUSEUMOGD.54082: http://www.bezirksmuseum.at/de/bezirksmuseum_2
+        MUSEUMOGD.54083: http://www.bezirksmuseum.at/de/bezirksmuseum_23
+        MUSEUMOGD.54084: http://www.bezirksmuseum.at/de/bezirksmuseum_5
+        MUSEUMOGD.54085: http://www.bezirksmuseum.at/de/bezirksmuseum_6
+        MUSEUMOGD.54086: http://www.bezirksmuseum.at/de/bezirksmuseum_12
+        MUSEUMOGD.54087: http://www.bezirksmuseum.at/de/bezirksmuseum_7
+        MUSEUMOGD.54088: http://www.bezirksmuseum.at/de/bezirksmuseum_16
+        MUSEUMOGD.54089: http://www.bezirksmuseum.at/de/bezirksmuseum_14
+        MUSEUMOGD.54090: http://www.bezirksmuseum.at/de/bezirksmuseum_15
+        MUSEUMOGD.54091: http://www.bezirksmuseum.at/de/bezirksmuseum_11
+        MUSEUMOGD.54092: http://www.bezirksmuseum.at/de/bezirksmuseum_18
+        MUSEUMOGD.54093: http://www.bezirksmuseum.at/de/bezirksmuseum_4
+        MUSEUMOGD.54114: http://www.bezirksmuseum.at/de/bezirksmuseum_8
+        MUSEUMOGD.54115: http://www.bezirksmuseum.at/de/bezirksmuseum_9
+        MUSEUMOGD.54116: http://www.bezirksmuseum.at/de/bezirksmuseum_20
+        MUSEUMOGD.54117: http://www.bezirksmuseum.at/de/bezirksmuseum_19
+        MUSEUMOGD.54118: http://www.bezirksmuseum.at/de/bezirksmuseum_19
+        MUSEUMOGD.54119: http://www.bezirksmuseum.at/de/bezirksmuseum_22
+        MUSEUMOGD.54120: http://www.bezirksmuseum.at/de/bezirksmuseum_10
+        MUSEUMOGD.54121: http://www.bezirksmuseum.at/de/bezirksmuseum_21
+        MUSEUMOGD.54122: http://www.bezirksmuseum.at/de/bezirksmuseum_17
+        MUSEUMOGD.54123: http://www.bezirksmuseum.at/de/bezirksmuseum_13
+        MUSEUMOGD.54124: http://www.bezirksmuseum.at/de/bezirksmuseum_1
+        MUSEUMOGD.54125: http://www.bezirksmuseum.at/de/bezirksmuseum_8
+        MUSEUMOGD.54279: http://www.bezirksmuseum.at/de/sondermuseum_circus_und_clowns
+        MUSEUMOGD.54104: http://www.fk-austria.at/de/stadion/museum/das-museum/
+        MUSEUMOGD.54100: https://www.bbi.at/museum
+        MUSEUMOGD.54094: http://www.bezirksmuseum.at/de/sondermuseum_phono
+        MUSEUMOGD.54107: http://www.mak.at/mak-expositur_geymuellerschloessel
+        MUSEUMOGD.54127: https://www.oenb.at/Ueber-Uns/Geldmuseum.html
+        MUSEUMOGD.54290: http://www.michaelerkirche.at/

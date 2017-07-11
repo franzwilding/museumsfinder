@@ -69,6 +69,14 @@ class Museum
     private $web;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="web_crawled", type="datetime", nullable=true)
+     *
+     */
+    private $webCrawled;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="category", type="string", length=255)
@@ -80,9 +88,9 @@ class Museum
     /**
      * @var float
      *
-     * @ORM\Column(name="prominence", type="float")
+     * @ORM\Column(name="uniqueness", type="float")
      */
-    private $prominence;
+    private $uniqueness;
 
     /**
      * @var MuseumFeature[]
@@ -102,6 +110,7 @@ class Museum
     {
         $this->features = new ArrayCollection();
         $this->feedback = new ArrayCollection();
+        $this->webCrawled = new \DateTime('now');
     }
 
     /**
@@ -273,31 +282,31 @@ class Museum
     }
 
     /**
-     * Set prominence
+     * Set uniqueness
      *
-     * @param float $prominence
+     * @param float $uniqueness
      *
      * @return Museum
      */
-    public function setProminence($prominence)
+    public function setUniqueness($uniqueness)
     {
-        $this->prominence = $prominence;
+        $this->uniqueness = $uniqueness;
 
         return $this;
     }
 
     /**
-     * Get prominence
+     * Get uniqueness
      *
      * @return float
      */
-    public function getProminence()
+    public function getUniqueness()
     {
-        return $this->prominence;
+        return $this->uniqueness;
     }
 
     /**
-     * @return MuseumFeature[]
+     * @return MuseumFeature[]|ArrayCollection
      */
     public function getFeatures()
     {
@@ -335,5 +344,22 @@ class Museum
 
         return $this;
     }
+
+    /**
+     * @return \DateTime
+     */
+    public function getWebCrawled(): \DateTime
+    {
+        return $this->webCrawled;
+    }
+
+    /**
+     * @param \DateTime $webCrawled
+     */
+    public function setWebCrawled(\DateTime $webCrawled)
+    {
+        $this->webCrawled = $webCrawled;
+    }
+
 }
 
