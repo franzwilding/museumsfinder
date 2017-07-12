@@ -55,9 +55,9 @@ class MuseumModelTrainCommand extends ContainerAwareCommand
             $rating = $feedback->getRating();
             $features = [];
             foreach($feedback->getParameters() as $feature => $value) {
-                $features .= $feature . ':' . $value;
+                $features[] = $feature . ':' . $value;
             }
-            $features_string = explode(' ', $features);
+            $features_string = implode(' ', $features);
             $museum = $feedback->getMuseum()->getName();
             $training .= "$rating $features_string # $museum\n";
         }

@@ -187,6 +187,7 @@ var Data = (function () {
     Data.prototype.sendFeedback = function (museum) {
         var data = this.getSearchData();
         data.rating = museum.rating;
+        data.museum = museum.id;
         return this.http.post(this.feedbackUrl, data);
     };
     return Data;

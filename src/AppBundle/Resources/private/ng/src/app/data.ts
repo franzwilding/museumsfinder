@@ -119,6 +119,7 @@ export class Data {
   public sendFeedback(museum : Museum) : Observable<any> {
     let data = this.getSearchData();
     data.rating = museum.rating;
+    data.museum = museum.id;
     return this.http.post(this.feedbackUrl, data);
   }
 }

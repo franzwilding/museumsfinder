@@ -106,11 +106,18 @@ class Museum
      */
     private $feedback;
 
-    public function __construct()
+    public function __construct($name = '', $address = '', $web = '', $feedback = null)
     {
         $this->features = new ArrayCollection();
         $this->feedback = new ArrayCollection();
         $this->webCrawled = new \DateTime('now');
+        $this->name = $name;
+        $this->address = $address;
+        $this->web = $web;
+
+        if($feedback) {
+            $this->feedback->add($feedback);
+        }
     }
 
     /**

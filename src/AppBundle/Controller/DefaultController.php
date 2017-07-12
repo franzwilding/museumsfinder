@@ -2,14 +2,15 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Feedback;
 use AppBundle\Entity\Museum;
 use Elastica\Query;
 use Elastica\Query\Match;
 use Elastica\Rescore\Query as QueryRescore;
-use Elastica\Script\Script;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -31,7 +32,9 @@ class DefaultController extends Controller
     }
 
     private function getFeedbackForm() : FormBuilderInterface {
-        return $this->getResultsForm()->add('rating', NumberType::class);
+        return $this->getResultsForm()
+            ->add('rating', NumberType::class)
+            ->add('museum', EntityType::class, ['class' => Museum::class, 'required' => true]);
     }
 
     /**
@@ -71,7 +74,11 @@ class DefaultController extends Controller
                 'query' => [
                     'ltr' => [
                         'model' => [ 'stored' => 'museum_ltr_model' ],
-                        'features' => [],
+                        'features' => [
+                            'match' => [
+                                'name' => ' ' . $data['searchText'],
+                            ]
+                        ],
                     ]
                 ]
             ]);
@@ -104,8 +111,24 @@ class DefaultController extends Controller
         $form = $this->getFeedbackForm()->getForm();
         $form->submit($data);
 
-        if($form->isValid() && $form->isSubmitted()) {
-            // TODO: Save Feedback.
+        if($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $parameters = [
+                '1' => 0,   // Categories
+                '2' => 0,   // Tags
+                '3' => 0,   // Uniqueness
+                '4' => 0,   // SearchText
+            ];
+            $feedback = new Feedback();
+            $feedback
+                ->setMuseum($data['museum'])
+                ->setRating($data['rating'])
+                ->setParameters($parameters);
+
+            // TODO: Get real parameter values by using the corresponding elasticsearch queries.
+
+            $this->getDoctrine()->getManager()->persist($feedback);
+            $this->getDoctrine()->getManager()->flush();
 
             return new Response('', 200);
         } else {
