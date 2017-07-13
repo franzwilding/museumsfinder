@@ -2,8 +2,8 @@
 
 <form>
   <nouislider name="uniqueness" [step]="1" [min]="0" [max]="100" [(ngModel)]="data.uniqueness" (ngModelChange)="change($event)"></nouislider>
-  <span class="left">Speziell</span>
-  <span class="right">Klassisch</span>
+  <span class="left">Klassisch</span>
+  <span class="right">Speziell</span>
 </form>
 
 <button (click)="data.next()" class="default">Weiter</button>

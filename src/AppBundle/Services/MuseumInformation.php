@@ -158,7 +158,11 @@ class MuseumInformation {
         }
 
         // Uniqueness
-        $f3 = ['match' => ['uniqueness' => $searchData['uniqueness']]];
+        $f3 = ['function_score' => ['gauss' => ['uniqueness' => [
+            'origin' => ($searchData['uniqueness'] / 100),
+            'scale' => 0.5,
+            'decay' => 0.5,
+        ]]]];
 
         // searchText
         $f4 = ['match_phrase' => [

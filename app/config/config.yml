@@ -99,7 +99,7 @@ fos_elastica:
                         address: ~
                         district: ~
                         web: ~
-                        uniqueness: ~
+                        uniqueness: { type: float }
                         category: ~
                         tags: ~
                     persistence:

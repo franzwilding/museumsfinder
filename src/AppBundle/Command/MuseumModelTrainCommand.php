@@ -78,7 +78,7 @@ class MuseumModelTrainCommand extends ContainerAwareCommand
             }
 
             foreach($featureValues as $id => $features) {
-                $rating = ($id == $feedback->getMuseum()->getId()) ? $feedback->getRating() : 1;
+                $rating = (($id == $feedback->getMuseum()->getId()) ? $feedback->getRating() : 3) - 1;
                 $fid = $feedback->getId();
                 $features_array = [];
                 for($i = 1; $i <= $countFeatures; $i++) {

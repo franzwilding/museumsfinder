@@ -38,7 +38,7 @@ module.exports = "<h2>3. Wähle Merkmale sind für dich relevant?</h2>\n\n<form>
 /***/ 146:
 /***/ (function(module, exports) {
 
-module.exports = "<h2>4. Interessierst du dich eher für große, bekannte oder kleinere, spezielle Museen?</h2>\n\n<form>\n  <nouislider name=\"uniqueness\" [step]=\"1\" [min]=\"0\" [max]=\"100\" [(ngModel)]=\"data.uniqueness\" (ngModelChange)=\"change($event)\"></nouislider>\n  <span class=\"left\">Speziell</span>\n  <span class=\"right\">Klassisch</span>\n</form>\n\n<button (click)=\"data.next()\" class=\"default\">Weiter</button>"
+module.exports = "<h2>4. Interessierst du dich eher für große, bekannte oder kleinere, spezielle Museen?</h2>\n\n<form>\n  <nouislider name=\"uniqueness\" [step]=\"1\" [min]=\"0\" [max]=\"100\" [(ngModel)]=\"data.uniqueness\" (ngModelChange)=\"change($event)\"></nouislider>\n  <span class=\"left\">Klassisch</span>\n  <span class=\"right\">Speziell</span>\n</form>\n\n<button (click)=\"data.next()\" class=\"default\">Weiter</button>"
 
 /***/ }),
 
