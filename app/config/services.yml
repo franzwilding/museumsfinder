@@ -10,4 +10,4 @@ services:
 
     museum_information:
         class: AppBundle\Services\MuseumInformation
-        arguments: ['@guzzle.client.web_crawler', '%museum_categories%', '%museum_uniqueness%', '@doctrine.orm.default_entity_manager']
+        arguments: ['@guzzle.client.web_crawler', '%kernel.root_dir%', '@doctrine.orm.default_entity_manager']

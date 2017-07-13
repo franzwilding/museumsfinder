@@ -8,6 +8,9 @@ use AppBundle\Entity\MuseumFeature;
 use Doctrine\ORM\EntityManager;
 use GuzzleHttp\Client;
 use Symfony\Component\DomCrawler\Crawler;
+use Symfony\Component\Serializer\Encoder\CsvEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 class MuseumInformation {
 
@@ -31,12 +34,17 @@ class MuseumInformation {
      */
     private $em;
 
-    public function __construct(Client $webCrawlerClient, array $museumCategories, array $museumUniqueness, EntityManager $em)
+    public function __construct(Client $webCrawlerClient, $rootDir, EntityManager $em)
     {
         $this->webCrawlerClient = $webCrawlerClient;
-        $this->museumCategories = $museumCategories;
-        $this->museumUniqueness = $museumUniqueness;
         $this->em = $em;
+
+        $serializer = new Serializer([new ObjectNormalizer()], [new CsvEncoder(';')]);
+        $infos = $serializer->decode(file_get_contents($rootDir . '/config/museum_information.csv'), 'csv');
+        foreach($infos as $info) {
+            $this->museumCategories[$info['FID']] = $info['CATEGORY'];
+            $this->museumUniqueness[$info['FID']] = (float)$info['UNIQUENESS'];
+        }
     }
 
     /**
