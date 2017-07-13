@@ -30,8 +30,8 @@ class DefaultController extends Controller
         }
 
         return $this->createFormBuilder(NULL, ['csrf_protection'   => false])
-            ->add('categories', ChoiceType::class, ['multiple' => true, 'choices' => $this->getParameter('museum_categories')])
-            ->add('tags', ChoiceType::class, ['multiple' => true, 'choices' => $this->getParameter('museum_tags')])
+            ->add('categories', ChoiceType::class, ['multiple' => true, 'choices' => $this->getParameter('museum_available_categories')])
+            ->add('tags', ChoiceType::class, ['multiple' => true, 'choices' => $this->getParameter('museum_available_tags')])
             ->add('districts', ChoiceType::class, ['multiple' => true, 'choices' => $districts])
             ->add('uniqueness', NumberType::class)
             ->add('searchText', TextareaType::class);
@@ -49,8 +49,8 @@ class DefaultController extends Controller
      */
     public function indexAction() {
         return [
-            'tags' => $this->getParameter('museum_tags'),
-            'categories' => $this->getParameter('museum_categories'),
+            'tags' => $this->getParameter('museum_available_tags'),
+            'categories' => $this->getParameter('museum_available_categories'),
         ];
     }
 

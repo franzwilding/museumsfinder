@@ -39,9 +39,6 @@ class ImportMuseumsCommand extends ContainerAwareCommand
         /*** @var Client $openDataClient */
         $openDataClient = $this->getContainer()->get('guzzle.client.open_data');
 
-        /*** @var Client $webCrawlerClient */
-        $webCrawlerClient = $this->getContainer()->get('guzzle.client.web_crawler');
-
         $museumInformation = $this->getContainer()->get('museum_information');
 
 
@@ -70,7 +67,7 @@ class ImportMuseumsCommand extends ContainerAwareCommand
                     ->setWeb($web)
                     ->setName($m->properties->NAME)
                     ->setDistrict($m->properties->BEZIRK)
-                    ->setAddress($m->properties->ADRESSE);
+                    ->setAddress($m->properties->ADRESSE . ', 1' . str_pad($m->properties->BEZIRK, 2, '0', STR_PAD_LEFT) . '0 Wien' );
 
                 $museumInformation->findCategory($museum);
                 $museumInformation->findUniqueness($museum);
@@ -97,9 +94,9 @@ class ImportMuseumsCommand extends ContainerAwareCommand
 
         $output->writeln('');
         $output->writeln(['Fetching additional information for the next 10 museums from website...', '']);
-        $museums = $museumRepo->findBy([], ['webCrawled' => 'ASC'], 10);
+        $museums = $museumRepo->findBy([], ['webCrawled' => 'ASC'], 1000);
         foreach($museums as $museum) {
-            if(count($museumInformation->findFeatures($museum)) > 0) {
+            if(count($museumInformation->findTags($museum)) > 0) {
                 $additional++;
                 $output->write('.');
             }

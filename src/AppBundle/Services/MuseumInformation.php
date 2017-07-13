@@ -80,80 +80,59 @@ class MuseumInformation {
      *
      * @param Museum $museum
      * @param bool $append
-     * @return MuseumFeature[]
+     * @return string[]
      */
-    public function findFeatures(Museum $museum, $append = true) : array {
-        $features = [];
+    public function findTags(Museum $museum, $append = true) : array {
+        $tags = [];
 
         if($web = $museum->getWeb()) {
             try {
-                $body = $this->webCrawlerClient->get($museum->getWeb())->getBody()->getContents();
-                $crawler = new Crawler($body);
-                $crawler->filter('script')->each(function ($crawler) {
-                    foreach ($crawler as $node) {
-                        $node->parentNode->removeChild($node);
-                    }
-                });
+                if(empty($museum->getWebContent()) || $museum->getWebCrawled()->diff(new \DateTime('now'))->days > 1000) {
+                    $crawler = new Crawler($this->webCrawlerClient->get($museum->getWeb())->getBody()->getContents());
+                    $crawler->filter('script')->each(function ($crawler) {
+                        foreach ($crawler as $node) {
+                            $node->parentNode->removeChild($node);
+                        }
+                    });
 
-                $text = $crawler->text();
-                $features = $this->extractFeaturesFromText(strtolower(str_replace('  ', ' ', $text)));
-
-                if($append) {
-                    foreach($features as $feature => $rating) {
-                        $this->addFeature($museum, $feature, $rating);
-                    }
+                    $text = $crawler->text();
+                    $text = strtolower(str_replace('  ', ' ', $text));
+                    $museum->setWebContent(utf8_encode($text));
                 }
+
+                $tags = $this->extractTagsFromText($museum->getWebContent());
 
             } catch (\Exception $e) {
                 echo "\n[ERROR]: Could not parse website. Error: " . $e->getMessage();
+                $museum->setWebContent('[ERROR]');
             }
+        }
+
+        if($append) {
+            $museum->setTags($tags);
         }
 
         $museum->setWebCrawled(new \DateTime('now'));
-        return $features;
+        return $tags;
     }
 
-    private function extractFeaturesFromText($text) {
-        $features = [];
+    private function extractTagsFromText($text) {
+        $tags = [];
 
 
-        if(strpos($text, 'freier eintritt') >= 0) {
-            $features[Feature::FEATURE_FREIER_EINTRITT] = 1;
+        if(strpos($text, 'freier eintritt') !== false) {
+            $tags[] = 'Freier Eintritt';
         }
 
-        if(strpos($text, 'barrierefrei') >= 0) {
-            $features[Feature::FEATURE_BARRIEREFREI] = 0.8;
+        if(strpos($text, 'barrierefrei') !== false) {
+            $tags[] = 'Barrierefrei';
         }
 
-        if(strpos($text, 'english') >= 0) {
-            $features[Feature::FEATURE_ENGLISCH] = 0.5;
+        if(strpos($text, 'english') !== false) {
+            $tags[] = 'Auf Englisch';
         }
 
-        return $features;
-    }
-
-    private function addFeature(Museum $museum, $feature_name, $rating) {
-        foreach($museum->getFeatures() as $museumFeature) {
-            if($museumFeature->getFeature()->getName() === $feature_name) {
-                $museumFeature->setRating($rating);
-                $this->em->persist($museumFeature);
-                return;
-            }
-        }
-
-        // Check if feature exists.
-        if(!($feature = $this->em->getRepository('AppBundle:Feature')->findOneBy(['name' => $feature_name]))) {
-            $feature = new Feature();
-            $feature->setName($feature_name);
-            $this->em->persist($feature);
-            $this->em->flush($feature);
-        }
-
-        // Create museum feature.
-        $museumFeature = new MuseumFeature();
-        $museumFeature->setFeature($feature)->setMuseum($museum);
-        $museumFeature->setRating($rating);
-        $museum->getFeatures()->add($museumFeature);
+        return $tags;
     }
 
     public function featureQueries($searchData) {

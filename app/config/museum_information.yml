@@ -1,6 +1,21 @@
 
 # This file holds fixed information for museums.
 parameters:
+
+    # Museum category is specified in museum_categories
+    museum_available_categories:
+        - Kunst
+        - Natur
+        - Technik
+        - Literatur
+        - Wien
+
+    # Tags for a museum are fond by parsing it's website
+    museum_available_tags:
+        - Barrierefrei
+        - Freier Eintritt
+        - Auf Englisch
+
     museum_categories:
 
         # Bezirksmuseum
@@ -91,3 +106,4 @@ parameters:
         MUSEUMOGD.54107: http://www.mak.at/mak-expositur_geymuellerschloessel
         MUSEUMOGD.54127: https://www.oenb.at/Ueber-Uns/Geldmuseum.html
         MUSEUMOGD.54290: http://www.michaelerkirche.at/
+        MUSEUMOGD.54183: http://www.leopoldmuseum.org/

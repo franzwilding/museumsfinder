@@ -2,7 +2,6 @@
 
 namespace AppBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -79,7 +78,14 @@ class Museum
     /**
      * @var string
      *
-     * @ORM\Column(name="category", type="string", length=255)
+     * @ORM\Column(name="web_content", type="text", nullable=true)
+     */
+    private $webContent;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="category", type="string")
      *
      * @Groups({"public"})
      */
@@ -93,18 +99,11 @@ class Museum
     private $uniqueness;
 
     /**
-     * @var MuseumFeature[]
+     * array
      *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\MuseumFeature", mappedBy="museum", cascade={"persist", "remove"})
+     * @ORM\Column(name="tags", type="array")
      */
-    private $features;
-
-    /**
-     * @var Feedback[]
-     *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Feedback", mappedBy="museum")
-     */
-    private $feedback;
+    private $tags = [];
 
     /**
      * @var int
@@ -113,18 +112,14 @@ class Museum
      */
     public $relevance = 0;
 
-    public function __construct($name = '', $address = '', $web = '', $feedback = null)
+    public function __construct($name = '', $address = '', $web = '', $id = null, $relevance = 0)
     {
-        $this->features = new ArrayCollection();
-        $this->feedback = new ArrayCollection();
         $this->webCrawled = new \DateTime('now');
         $this->name = $name;
         $this->address = $address;
         $this->web = $web;
-
-        if($feedback) {
-            $this->feedback->add($feedback);
-        }
+        $this->id = $id;
+        $this->relevance = $relevance;
     }
 
     /**
@@ -296,6 +291,30 @@ class Museum
     }
 
     /**
+     * Set tags
+     *
+     * @param array $tags
+     *
+     * @return Museum
+     */
+    public function setTags($tags)
+    {
+        $this->tags = $tags;
+
+        return $this;
+    }
+
+    /**
+     * Get tags
+     *
+     * @return array
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+    /**
      * Set uniqueness
      *
      * @param float $uniqueness
@@ -320,46 +339,6 @@ class Museum
     }
 
     /**
-     * @return MuseumFeature[]|ArrayCollection
-     */
-    public function getFeatures()
-    {
-        return $this->features;
-    }
-
-    /**
-     * @param MuseumFeature[] $features
-     *
-     * @return Museum
-     */
-    public function setFeatures($features)
-    {
-        $this->features = $features;
-
-        return $this;
-    }
-
-    /**
-     * @return Feedback[]
-     */
-    public function getFeedback()
-    {
-        return $this->feedback;
-    }
-
-    /**
-     * @param Feedback $feedback
-     *
-     * @return Museum
-     */
-    public function addFeedback($feedback)
-    {
-        $this->feedback->add($feedback);
-
-        return $this;
-    }
-
-    /**
      * @return \DateTime
      */
     public function getWebCrawled(): \DateTime
@@ -375,13 +354,20 @@ class Museum
         $this->webCrawled = $webCrawled;
     }
 
-    public function getTags() {
-        $tags = [];
-        foreach($this->getFeatures() as $feature) {
-            $tags[] = $feature->getFeature()->getName();
-        }
-        return $tags;
+    /**
+     * @return string
+     */
+    public function getWebContent()
+    {
+        return $this->webContent;
     }
 
+    /**
+     * @param string $webContent
+     */
+    public function setWebContent($webContent)
+    {
+        $this->webContent = $webContent;
+    }
 }
 

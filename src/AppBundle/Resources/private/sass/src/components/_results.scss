@@ -94,6 +94,14 @@ results {
           background: $red;
         }
       }
+
+      p.address {
+        position: absolute;
+        color: white;
+        bottom: 7px;
+        left: 7px;
+        font-size: 11px;
+      }
     }
 
     aside {
