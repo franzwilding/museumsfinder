@@ -3,6 +3,7 @@
 namespace AppBundle\Command;
 
 use AppBundle\Entity\Museum;
+use Elastica\Multi\MultiBuilder;
 use GuzzleHttp\Client;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -51,15 +52,45 @@ class MuseumModelTrainCommand extends ContainerAwareCommand
     private function _createTrainingDataFile() {
 
         $training = '';
+        $countFeatures = 4;
+
         foreach($this->getContainer()->get('doctrine.orm.default_entity_manager')->getRepository('AppBundle:Feedback')->findAll() as $feedback) {
-            $rating = $feedback->getRating();
-            $features = [];
-            foreach($feedback->getParameters() as $feature => $value) {
-                $features[] = $feature . ':' . $value;
+
+            $client = new Client();
+            $searchString = '';
+            foreach($this->getContainer()->get('museum_information')->featureQueries($feedback->getParameters()) as $query) {
+                $searchString .= "{}\n" . json_encode(['query' => $query]) . "\n";
             }
-            $features_string = implode(' ', $features);
-            $museum = $feedback->getMuseum()->getName();
-            $training .= "$rating $features_string # $museum\n";
+            $response = $client->request('GET', 'localhost:9200/app/museum/_msearch', [
+                'body' => $searchString,
+            ]);
+            $results = json_decode($response->getBody()->getContents());
+            $featureValues = [];
+            foreach($results->responses as $index => $response) {
+                foreach($response->hits->hits as $hit) {
+
+                    if(!isset($featureValues[$hit->_id])) {
+                        $featureValues[$hit->_id] = [];
+                    }
+
+                    $featureValues[$hit->_id][($index+1)] = $hit->_score;
+                }
+            }
+
+            foreach($featureValues as $id => $features) {
+                $rating = ($id == $feedback->getMuseum()->getId()) ? $feedback->getRating() : 1;
+                $fid = $feedback->getId();
+                $features_array = [];
+                for($i = 1; $i <= $countFeatures; $i++) {
+                    if(array_key_exists($i, $features)) {
+                        $features_array[] = $i . ':' . $features[$i];
+                    } else {
+                        $features_array[] = $i . ':' . 0;
+                    }
+                }
+                $features_string = implode(' ', $features_array);
+                $training .= "$rating qid:$fid $features_string # $id\n";
+            }
         }
 
         if(strlen($training) == 0) {

@@ -156,4 +156,29 @@ class MuseumInformation {
         $museum->getFeatures()->add($museumFeature);
     }
 
+    public function featureQueries($searchData) {
+
+        // Categories
+        $f1 = ['bool' => ['should' => []]];
+        foreach($searchData['categories'] as $category) {
+            $f1['bool']['should'][] = ['match' => ['category' => $category]];
+        }
+
+        // Tags
+        $f2 = ['bool' => ['should' => []]];
+        foreach($searchData['tags'] as $tag) {
+            $f2['bool']['should'][] = ['match' => ['tags' => $tag]];
+        }
+
+        // Uniqueness
+        $f3 = ['match' => ['uniqueness' => $searchData['uniqueness']]];
+
+        // searchText
+        $f4 = ['match_phrase' => [
+            'name' => ' ' . $searchData['searchText'],
+        ]];
+
+        return [$f1, $f2, $f3, $f4];
+    }
+
 }

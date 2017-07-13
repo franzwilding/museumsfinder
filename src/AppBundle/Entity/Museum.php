@@ -368,5 +368,13 @@ class Museum
         $this->webCrawled = $webCrawled;
     }
 
+    public function getTags() {
+        $tags = [];
+        foreach($this->getFeatures() as $feature) {
+            $tags[] = $feature->getFeature()->getName();
+        }
+        return $tags;
+    }
+
 }
 

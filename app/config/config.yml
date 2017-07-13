@@ -94,11 +94,14 @@ fos_elastica:
             types:
                 museum:
                     properties:
+                        id: ~
                         name: ~
                         address: ~
                         district: ~
                         web: ~
                         uniqueness: ~
+                        category: ~
+                        tags: ~
                     persistence:
                         driver: orm
                         model: AppBundle\Entity\Museum

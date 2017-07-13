@@ -74,11 +74,7 @@ class DefaultController extends Controller
                 'query' => [
                     'ltr' => [
                         'model' => [ 'stored' => 'museum_ltr_model' ],
-                        'features' => [
-                            'match' => [
-                                'name' => ' ' . $data['searchText'],
-                            ]
-                        ],
+                        'features' => $this->get('museum_information')->featureQueries($data),
                     ]
                 ]
             ]);
@@ -113,19 +109,11 @@ class DefaultController extends Controller
 
         if($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            $parameters = [
-                '1' => 0,   // Categories
-                '2' => 0,   // Tags
-                '3' => 0,   // Uniqueness
-                '4' => 0,   // SearchText
-            ];
             $feedback = new Feedback();
             $feedback
                 ->setMuseum($data['museum'])
                 ->setRating($data['rating'])
-                ->setParameters($parameters);
-
-            // TODO: Get real parameter values by using the corresponding elasticsearch queries.
+                ->setParameters($data);
 
             $this->getDoctrine()->getManager()->persist($feedback);
             $this->getDoctrine()->getManager()->flush();
