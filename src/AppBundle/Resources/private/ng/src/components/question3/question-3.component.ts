@@ -7,12 +7,11 @@ import {Data} from "../../app/data";
 })
 export class Question3 {
 
-  tags : string[] = [
-    'Barrierefrei',
-    'Freier Eintritt',
-  ];
+  tags : string[] = [];
 
-  constructor(private data: Data) {}
+  constructor(private data: Data) {
+    this.tags = data.availableTags;
+  }
 
   toggle(tag) : void {
     if(this.isSelected(tag)) {

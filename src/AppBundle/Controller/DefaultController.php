@@ -23,10 +23,16 @@ use Symfony\Component\HttpFoundation\Response;
 class DefaultController extends Controller
 {
     private function getResultsForm() : FormBuilderInterface {
+
+        $districts = [];
+        for($i = 1; $i <= 23; $i++) {
+            $districts[] = $i;
+        }
+
         return $this->createFormBuilder(NULL, ['csrf_protection'   => false])
-            ->add('categories', ChoiceType::class, ['multiple' => true, 'choices' => ['Wien']])
-            ->add('tags', ChoiceType::class, ['multiple' => true, 'choices' => ['Barrierefrei']])
-            ->add('districts', ChoiceType::class, ['multiple' => true, 'choices' => [10]])
+            ->add('categories', ChoiceType::class, ['multiple' => true, 'choices' => $this->getParameter('museum_categories')])
+            ->add('tags', ChoiceType::class, ['multiple' => true, 'choices' => $this->getParameter('museum_tags')])
+            ->add('districts', ChoiceType::class, ['multiple' => true, 'choices' => $districts])
             ->add('uniqueness', NumberType::class)
             ->add('searchText', TextareaType::class);
     }
@@ -42,7 +48,10 @@ class DefaultController extends Controller
      * @Template()
      */
     public function indexAction() {
-        return [];
+        return [
+            'tags' => $this->getParameter('museum_tags'),
+            'categories' => $this->getParameter('museum_categories'),
+        ];
     }
 
     /**
@@ -59,8 +68,6 @@ class DefaultController extends Controller
         if($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
 
-
-            $finder = $this->get('fos_elastica.finder.app.museum');
             $query = new Query();
 
             $mainQuery = new Query\BoolQuery();
@@ -83,10 +90,16 @@ class DefaultController extends Controller
             $query->setQuery($mainQuery);
             $query->setRescore($queryRescore);
 
-            /**
-             * @var Museum[] $museums
-             */
-            $museums = $finder->find($query);
+
+            $museums = [];
+            $response = $this->get('fos_elastica.index.app.museum')->search($query);
+            foreach($response->getResults() as $result) {
+                $data = $result->getData();
+                $museum = new Museum($data['name'], $data['address'], $data['web']);
+                $museum->setId($result->getId());
+                $museum->relevance = $result->getScore() / $response->getMaxScore();
+                $museums[] = $museum;
+            }
 
         } else {
             return new JsonResponse((string)$form->getErrors(true, true), 400);

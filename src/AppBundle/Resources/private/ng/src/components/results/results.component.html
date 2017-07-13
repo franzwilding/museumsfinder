@@ -18,7 +18,7 @@
         </svg>
       </span>
     </h3>
-    <span class="matching {{ museum.matchingClass() }}">{{ museum.matching }}</span>
+    <span class="matching {{ museum.matchingClass() }}">{{ museum.matching() }}%</span>
     <p class="address">{{ museum.address }}</p>
   </div>
   <aside>
@@ -59,3 +59,5 @@
     </a>
   </aside>
 </article>
+
+<button class="default" style="margin-top: 20px;" *ngIf="!loading" (click)="back()">Suche anpassen</button>

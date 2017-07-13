@@ -7,15 +7,11 @@ import {Data} from "../../app/data";
 })
 export class Question1 {
 
-  categories : string[] = [
-    'Kunst',
-    'Natur',
-    'Technik',
-    'Literatur',
-    'Wien'
-  ];
+  categories : string[] = [];
 
-  constructor(private data: Data) {}
+  constructor(private data: Data) {
+    this.categories = data.availableCategories;
+  }
 
   toggle(category) : void {
     if(this.isSelected(category)) {

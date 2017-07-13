@@ -9,7 +9,7 @@ export class Museum {
   public name : string = "";
   public rating : number = 0;
   public web : string = "";
-  public matching : number = 0;
+  public relevance : number = 0;
   public address : string = "";
   public open : boolean = false;
 
@@ -17,13 +17,25 @@ export class Museum {
     this.id = data.id;
     this.name = data.name;
     this.web = data.web;
-    this.matching = data.matching;
+    this.relevance = data.relevance;
     this.address = data.address;
     this.open = data.open;
   }
 
+  public matching() : number {
+    return Math.round(this.relevance * 100);
+  }
+
   public matchingClass() : string {
-    return '';
+    if(this.relevance > 0.9) {
+      return 'good';
+    }
+
+    if(this.relevance > 0.6) {
+      return 'middle';
+    }
+
+    return 'bad';
   }
 }
 
@@ -32,6 +44,9 @@ export class Data {
 
   private findUrl : string = "/results";
   private feedbackUrl : string = "/feedback";
+
+  public availableCategories = [];
+  public availableTags= [];
 
   public started : boolean = false;
   public countQuestions : number = 5;

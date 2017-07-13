@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, ElementRef} from '@angular/core';
 import {Data} from "./data";
 
 @Component({
@@ -7,7 +7,12 @@ import {Data} from "./data";
 })
 export class AppComponent {
 
-  constructor(private data : Data) {}
+  constructor(private data : Data, private me: ElementRef) {}
+
+  ngAfterViewInit() {
+    this.data.availableCategories = JSON.parse(this.me.nativeElement.dataset.categories);
+    this.data.availableTags = JSON.parse(this.me.nativeElement.dataset.tags);
+  }
 
   getClasses() : string {
     let classes = ['app-inner'];

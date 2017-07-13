@@ -10,6 +10,18 @@ parameters:
     locale: de
     dataset: "/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:MUSEUMOGD&srsName=EPSG:4326&outputFormat=json"
 
+    museum_categories:
+        - Kunst
+        - Natur
+        - Technik
+        - Literatur
+        - Wien
+
+    museum_tags:
+        - Barrierefrei
+        - Freier Eintritt
+        - Auf Englisch
+
 framework:
     #esi: ~
     translator: { fallbacks: ['%locale%'] }

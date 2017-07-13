@@ -37,6 +37,10 @@ export class Results {
     });
   }
 
+  back() : void {
+    this.data.goTo(this.data.countQuestions);
+  }
+
   sendFeedback(museum : Museum) : void {
     this.data.sendFeedback(museum).subscribe(() => {
       alert("Danke für dein Feedback!");

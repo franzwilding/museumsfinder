@@ -106,6 +106,13 @@ class Museum
      */
     private $feedback;
 
+    /**
+     * @var int
+     *
+     * @Groups({"public"})
+     */
+    public $relevance = 0;
+
     public function __construct($name = '', $address = '', $web = '', $feedback = null)
     {
         $this->features = new ArrayCollection();

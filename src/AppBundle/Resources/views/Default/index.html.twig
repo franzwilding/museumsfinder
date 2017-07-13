@@ -9,7 +9,7 @@
     <link type="text/css" rel="stylesheet" href="{{ asset('css/style.css') }}" />
 </head>
 <body>
-    <app>Loading...</app>
+    <app data-tags='{{ tags|json_encode|raw }}' data-categories='{{ categories|json_encode|raw }}'>Loading...</app>
     <script type="text/javascript" src="{{ asset('ng/inline.bundle.js') }}"></script>
     <script type="text/javascript" src="{{ asset('ng/polyfills.bundle.js') }}"></script>
     <script type="text/javascript" src="{{ asset('ng/vendor.bundle.js') }}"></script>
