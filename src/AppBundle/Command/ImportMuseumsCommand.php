@@ -67,7 +67,7 @@ class ImportMuseumsCommand extends ContainerAwareCommand
                     ->setWeb($web)
                     ->setName($m->properties->NAME)
                     ->setDistrict($m->properties->BEZIRK)
-                    ->setAddress($m->properties->ADRESSE . ', 1' . str_pad($m->properties->BEZIRK, 2, '0', STR_PAD_LEFT) . '0 Wien' );
+                    ->setAddress(trim($m->properties->ADRESSE) . ', 1' . str_pad($m->properties->BEZIRK, 2, '0', STR_PAD_LEFT) . '0 Wien' );
 
                 $museumInformation->findCategory($museum);
                 $museumInformation->findUniqueness($museum);
