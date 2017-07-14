@@ -112,7 +112,7 @@ var Museum = (function () {
         if (this.relevance > 0.9) {
             return 'good';
         }
-        if (this.relevance > 0.6) {
+        if (this.relevance > 0.3) {
             return 'middle';
         }
         return 'bad';

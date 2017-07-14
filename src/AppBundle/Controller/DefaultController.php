@@ -71,10 +71,18 @@ class DefaultController extends Controller
             $query = new Query();
 
             $mainQuery = new Query\BoolQuery();
+            $districtQuery = new Query\BoolQuery();
+            $districtQuery->setBoost(10);
             foreach($data['districts'] as $district) {
-                $districtQuery = new Match();
-                $districtQuery->setFieldQuery('district', $district);
-                $mainQuery->addShould($districtQuery);
+                $districtInnerQuery = new Match();
+                $districtInnerQuery->setFieldQuery('district', $district);
+                $districtQuery->addShould($districtInnerQuery);
+            }
+
+            $mainQuery->addShould($districtQuery);
+
+            foreach ($this->get('museum_information')->regularQueries($data) as $regularQuery) {
+                $mainQuery->addShould($regularQuery);
             }
 
             $ltrQuery = new Query([
@@ -85,11 +93,10 @@ class DefaultController extends Controller
                     ]
                 ]
             ]);
-            $queryRescore = new QueryRescore($ltrQuery);
 
+            $queryRescore = new QueryRescore($ltrQuery);
             $query->setQuery($mainQuery);
             $query->setRescore($queryRescore);
-
 
             $museums = [];
             $response = $this->get('fos_elastica.index.app.museum')->search($query);
@@ -122,10 +129,19 @@ class DefaultController extends Controller
 
         if($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
+            $queryData = [
+                'categories' => $data['categories'],
+                'districts' => $data['districts'],
+                'searchText' => $data['searchText'],
+                'tags' => $data['tags'],
+                'uniqueness' => $data['uniqueness'],
+            ];
+
             $feedback = new Feedback();
             $feedback
                 ->setMuseum($data['museum'])
                 ->setRating($data['rating'])
+                ->setQueryHash(md5(serialize($queryData)))
                 ->setParameters($data);
 
             $this->getDoctrine()->getManager()->persist($feedback);

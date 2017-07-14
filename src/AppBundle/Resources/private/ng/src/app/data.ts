@@ -31,7 +31,7 @@ export class Museum {
       return 'good';
     }
 
-    if(this.relevance > 0.6) {
+    if(this.relevance > 0.3) {
       return 'middle';
     }
 

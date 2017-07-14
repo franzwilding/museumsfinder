@@ -54,12 +54,23 @@ class MuseumModelTrainCommand extends ContainerAwareCommand
         $training = '';
         $countFeatures = 4;
 
-        foreach($this->getContainer()->get('doctrine.orm.default_entity_manager')->getRepository('AppBundle:Feedback')->findAll() as $feedback) {
+        $allFeedBack = $this->getContainer()->get('doctrine.orm.default_entity_manager')->getRepository('AppBundle:Feedback')->findAll();
+        $queryIds = [];
+
+        foreach($allFeedBack as $feedback) {
+            if(!array_key_exists($feedback->getQueryHash(), $queryIds)) {
+                $queryIds[$feedback->getQueryHash()] = count($queryIds) + 1;
+            }
+        }
+
+        foreach($allFeedBack as $feedback) {
 
             $client = new Client();
             $searchString = '';
             foreach($this->getContainer()->get('museum_information')->featureQueries($feedback->getParameters()) as $query) {
-                $searchString .= "{}\n" . json_encode(['query' => $query]) . "\n";
+
+                // size = 1000 so we can be sure, that the object we need gets fetched.
+                $searchString .= "{}\n" . json_encode(['query' => $query, "size" => 1000]) . "\n";
             }
             $response = $client->request('GET', 'localhost:9200/app/museum/_msearch', [
                 'body' => $searchString,
@@ -78,18 +89,20 @@ class MuseumModelTrainCommand extends ContainerAwareCommand
             }
 
             foreach($featureValues as $id => $features) {
-                $rating = (($id == $feedback->getMuseum()->getId()) ? $feedback->getRating() : 3) - 1;
-                $fid = $feedback->getId();
-                $features_array = [];
-                for($i = 1; $i <= $countFeatures; $i++) {
-                    if(array_key_exists($i, $features)) {
-                        $features_array[] = $i . ':' . $features[$i];
-                    } else {
-                        $features_array[] = $i . ':' . 0;
+                if($id == $feedback->getMuseum()->getId()) {
+                    $rating = $feedback->getRating();
+                    $fid = $queryIds[$feedback->getQueryHash()];
+                    $features_array = [];
+                    for($i = 1; $i <= $countFeatures; $i++) {
+                        if(array_key_exists($i, $features)) {
+                            $features_array[] = $i . ':' . $features[$i];
+                        } else {
+                            $features_array[] = $i . ':' . 0;
+                        }
                     }
+                    $features_string = implode(' ', $features_array);
+                    $training .= "$rating qid:$fid $features_string # $id\n";
                 }
-                $features_string = implode(' ', $features_array);
-                $training .= "$rating qid:$fid $features_string # $id\n";
             }
         }
 

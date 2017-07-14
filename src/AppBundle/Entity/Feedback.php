@@ -36,6 +36,13 @@ class Feedback
     private $museum;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="query_hash", type="string")
+     */
+    private $queryHash;
+
+    /**
      * @var array
      *
      * @ORM\Column(name="parameters", type="array")
@@ -127,6 +134,26 @@ class Feedback
     public function getParameters()
     {
         return $this->parameters;
+    }
+
+    /**
+     * @return string
+     */
+    public function getQueryHash(): string
+    {
+        return $this->queryHash;
+    }
+
+    /**
+     * @param string $queryHash
+     *
+     * @return Feedback
+     */
+    public function setQueryHash(string $queryHash)
+    {
+        $this->queryHash = $queryHash;
+
+        return $this;
     }
 }
 

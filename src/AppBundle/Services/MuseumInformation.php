@@ -143,33 +143,45 @@ class MuseumInformation {
         return $tags;
     }
 
-    public function featureQueries($searchData) {
+    public function regularQueries($searchData) {
 
         // Categories
-        $f1 = ['bool' => ['should' => []]];
+        $f1 = ['bool' => ['should' => [], 'boost' => 1]];
         foreach($searchData['categories'] as $category) {
             $f1['bool']['should'][] = ['match' => ['category' => $category]];
         }
 
         // Tags
-        $f2 = ['bool' => ['should' => []]];
+        $f2 = ['bool' => ['should' => [], 'boost' => 1]];
         foreach($searchData['tags'] as $tag) {
             $f2['bool']['should'][] = ['match' => ['tags' => $tag]];
         }
 
         // Uniqueness
-        $f3 = ['function_score' => ['gauss' => ['uniqueness' => [
-            'origin' => ($searchData['uniqueness'] / 100),
-            'scale' => 0.5,
-            'decay' => 0.5,
-        ]]]];
+        $f3 = [
+            'function_score' => [
+                'boost' => 2,
+                'gauss' => [
+                    'uniqueness' => [
+                        'origin' => ($searchData['uniqueness'] / 100),
+                        'scale' => 0.5,
+                        'decay' => 0.5,
+                    ]
+                ]
+            ]
+        ];
+
+        return [$f1, $f2, $f3];
+    }
+
+    public function featureQueries($searchData) {
 
         // searchText
         $f4 = ['match_phrase' => [
             'name' => ' ' . $searchData['searchText'],
         ]];
 
-        return [$f1, $f2, $f3, $f4];
+        return array_merge($this->regularQueries($searchData), [$f4]);
     }
 
 }
