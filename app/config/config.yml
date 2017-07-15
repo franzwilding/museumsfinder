@@ -102,6 +102,7 @@ fos_elastica:
                         uniqueness: { type: float }
                         category: ~
                         tags: ~
+                        web_content: ~
                     persistence:
                         driver: orm
                         model: AppBundle\Entity\Museum

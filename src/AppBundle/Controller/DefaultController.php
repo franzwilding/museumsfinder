@@ -97,6 +97,7 @@ class DefaultController extends Controller
             $queryRescore = new QueryRescore($ltrQuery);
             $query->setQuery($mainQuery);
             $query->setRescore($queryRescore);
+            $query->setSize(20);
 
             $museums = [];
             $response = $this->get('fos_elastica.index.app.museum')->search($query);

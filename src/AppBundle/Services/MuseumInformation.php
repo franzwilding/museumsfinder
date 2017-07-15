@@ -177,9 +177,12 @@ class MuseumInformation {
     public function featureQueries($searchData) {
 
         // searchText
-        $f4 = ['match_phrase' => [
-            'name' => ' ' . $searchData['searchText'],
-        ]];
+        $f4 = ['common' => [
+            'web_content' => [
+                'query' => (string)$searchData['searchText'],
+                ],
+            ],
+        ];
 
         return array_merge($this->regularQueries($searchData), [$f4]);
     }
