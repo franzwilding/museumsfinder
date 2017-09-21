@@ -1,0 +1,49 @@
+
+.text-content {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 600px;
+  margin-top: -40px;
+  padding: 20px;
+
+  strong, p strong, ul li strong, ol li strong {
+    font-weight: 600;
+  }
+
+  .light {
+    opacity: 0.75;
+  }
+
+  p {
+    line-height: 170%;
+    margin-bottom: 10px;
+  }
+
+  h3 {
+    font-weight: 300;
+    line-height: 140%;
+    @include font-size(20);
+    letter-spacing: 1px;
+    margin-top: 30px;
+    margin-bottom: 5px;
+
+    &:before {
+      content: "»";
+      display: inline-block;
+      margin-right: 5px;
+    }
+  }
+
+  ul, ol {
+
+    list-style: circle;
+    margin: 5px 0 5px 20px;
+
+    li {
+      font-weight: normal;
+      @include font-size(15);
+      line-height: 140%;
+      margin-bottom: 10px;
+    }
+  }
+}

@@ -67,14 +67,48 @@
         </a>
       </h2>
 
-      <p>Lorem Ipsum.</p>
-      <p>Lorem Ipsum.</p>
-      <p>Lorem Ipsum.</p>
-      <p>Lorem Ipsum.</p>
-      <p>Lorem Ipsum.</p>
-      <p>Lorem Ipsum.</p>
-      <p>Lorem Ipsum.</p><p>Lorem Ipsum.</p>
-      <p>Lorem Ipsum.</p>
+      <div class="text-content">
+        <p>Der Museumsfinder ist eine Anwendung, die im Zuge der Lehrveranstaltung „From Design To Software 2“ an der TU Wien entstanden ist. Ziel ist eine konkrete Implementierung einer Guided Decision Lösung für das finden eines Passenden Museums anhand von bestimmten Kriterien in Wien. Die Implementierung erfolgt auf Grundlage einer Recherche und der anschließenden Analyse bestehender Guided Selling / Guided Decision Lösungen.</p>
+        <p>Das Projekt versucht bestehende Lösungen durch neue Technische Ansätze aus dem Bereich Machine Learning zu erweitern. Dafür wird einerseits ein intelligentes Text-Matching Modul eingesetzt, um die Eingabe eines Beschreibungstextes analysieren zu können, andererseits wird ein Learn-To-Rank Modell implementiert mit dessen Hilfe die Anwendung mit jeder getätigten Suche intelligenter wird.</p>
+
+        <h3>Technologien</h3>
+
+        <ul>
+          <li><strong>Basissystem:</strong> <span class="light">PHP Framework Symfony 3</span></li>
+          <li><strong>Frontend:</strong> <span class="light">Angular 4, HTML, SASS</span></li>
+          <li><strong>Suchserver:</strong> <span class="light">Elastic Search 5.4</span></li>
+          <li><strong>Learn-To-Rank Bibliothek:</strong> <span class="light">ranklib</span></li>
+          <li><strong>Elastic Search & Learn-To-Rank Integration:</strong> <span class="light">o19s/elasticsearch-learning-to-rank</span></li>
+        </ul>
+
+        <h3>Beschaffung, Analyse und Erweiterung des Datensatzes</h3>
+        <p>Das Projekt basiert auf der OpenData Liste aller Museen in Wien. Diese Resource stellt den Ausgangspunkt der Datenbank dar. Per Hand wurden die Museen für eine grobe Filterung in Kategorien unterteilt. Wenn bei einem Museum in der OpenData Liste ein Link zur Website hinterlegt ist, dann wird der Text-Inhalt der Website heruntergeladen und für weitere Analysen aufbereitet.</p>
+        <p>Für das herunterladen der OpenData Liste sowie aller Museums-Websites wurde eine Command Line Interface Anwendung geschrieben. Da das Herunterladen und Analysieren aller Daten länger dauert, erfolgt dieser Schritt in einem Batch-Vorgang. Die Implementierung wurde so gewählt, dass die Anwendung leicht mittels Cronjob auf einem Webserver kontinuierlich ausgeführt werden kann.</p>
+        <p>Nachdem die Daten heruntergeladen und für die weitere Verarbeitung aufbereitet sind, werden sie in den ElasticSearch Suchserver eingespielt. In diesem Schritt erfolgt auch die Analyse der Texte, auf dessen Basis später die Suche aufbaut.</p>
+
+        <h3>Die Guided Decision Komponente</h3>
+
+        <p>Herzstück der Anwendung ist Guided Decision Komponente Komponente, mit dessen Hilfe innerhalb von wenigen Schritten das passende Museum gefunden werden kann.</p>
+
+        <ul>
+          <li><strong>Schritt 1: Auswahl der Hauptkategorie</strong><br /><span class="light">In Schritt 1 können die Hauptkategorien (z.b. „Kunst & Literatur“ oder „Handwerk“) gewählt werden. Diese Auswahl wird in der Suche mit den per Hand zugewiesenen Kategorien verglichen und schränkt das Ergebnis so ein, dass nur Museen angezeigt werden, die in die ausgewählten Kategorien passen.</span></li>
+          <li><strong>Schritt 2: Auswahl der in Frage kommenden Bezirke</strong> <span class="light">In diesem Schritt kann die Auswahl der Museen anhand von geographischen Kriterien eingeschränkt werden. Da die Adresse der Museen in der OpenData Liste bereits verfügbar ist, ist für die Datenaufbereitung hier kein weiterer Schritt notwendig. Für eine einfache und intuitive Auswahl wurde eine SVG-Karte von Wien genommen und die Bezirke klickbar gemacht.</span></li>
+          <li><strong>Schritt 3: Auswahl von Merkmalen</strong><br /><span class="light">In Schritt 3 können mehrere Merkmale ausgewählt werden. Jedem Museum werden Merkmale anhand der Analyse der zugeordneten Website zugewiesen. Dabei wurden für eine erste, einfache Implementierung nur drei Merkmale zugewiesen. Die Zuweisung der Merkmale erfolgt je nachdem, ob das Merkmale oder dessen Synonyme auf der Website vorkommen. Da aber nicht alle Museen Websites haben und weil die Zuweisung der Merkmale nicht fehlerfrei ist, wurde dieses Suchkriterium negativ gewichtet und hat daher einen geringeren Einfluss auf das Ergebnis wie die anderen Kriterien.</span></li>
+          <li><strong>Schritt 4: Auswahl der Bekanntheit des Museums</strong><br /><span class="light">In diesem Schritt können User_innen auswählen wie speziell oder wie bekannt das Museum sein soll. Die Auswahl erfolgt mit Hilfe eines Schiebereglers, der sowohl auf Touch Devices als auch mit einer Maus gut bedient werden kann.</span></li>
+          <li><strong>Schritt 5: Eingabe eines kurzen Beschreibungstextes</strong><br /><span class="light">Im letzten Suchschritt kann noch ein kurzer Beschreibungstext eingegeben werden. Dieser wird als Suchtext mit dem Text der Website verglichen und ein Ähnlichkeitswert anhand von übereinstimmenden Phrasen und Wörtern bestimmt. Mit dem Beschreibungstext können so zum Beispiel Themenschwerpunkte oder aktuelle Ausstellungen in Museen gefunden werden, die auf der Website des Museums beschrieben sind.</span></li>
+          <li><strong>Ergebnis</strong><br /><span class="light">Die gesammelten Suchkriterien werden im letzten Schritt an den Suchserver übermittelt und die besten 20 Treffer angezeigt. Jedes Museum wird mit Name, Adresse Treffer-Quote in Prozent sowie der zugewiesenen Website (wenn vorhandne) angegeben. Darüber hinaus wird der_die User_in um ein kurzes Feedback in Form einer Auswahl von 1-5 Sternen gebeten, um zu beurteilen wie gut dieses gefundene Museum in die Suche passt. Dieses Feedback, gemeinsam mit den zuvor festgelegten Suchparametern ist die Basis für den selbstlernenden Algorithmus und werden gespeichert und später als Trainingsdaten für den Learn-To-Rank Algorithmus verwendet.</span></li>
+        </ul>
+
+        <h3>Learn-To-Rank Algorithmus</h3>
+        <p>XXX</p>
+
+        <h3>Weitere Schritte</h3>
+        <p>Damit dieses Projekt nicht noch komplexer wird wurde auf die genaue Analyse der Website für die Zuweisung der Merkmale sowie eine größere Auswahl an Merkmalen verzichtet. Die Analyse der Website könnte zum Beispiel noch den HTML- & CSS-Code der Website analysieren um herauszufinden, welche Texte wichtiger sind als andere.</p>
+        <p>Auch die Analyse und der Vergleich des eingegebene Suchtextes könnte mit Hilfe eines NLP (natural language processing) Modul genauer analysiert werden um auch die Bedeutung des Textes mit der Bedeutung der Website vergleichen zu können. Dieser Schritt würde aber ein eigenes großes Projekt darstellen.</p>
+        <p>Im Zuge des Projektes wurden nur wenige Feedback-Vektoren für das Training des LTR-Modells verwendet. Auch wenn bereits damit gute Ergebnisse erzielt werden konnten, könnte ein Folgeprojekt der Einsatz und die Analyse der Daten in der Praxis sein.</p>
+
+
+      </div>
     </article>
   </footer>
 </div>
