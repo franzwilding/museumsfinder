@@ -14,6 +14,23 @@
     opacity: 0.75;
   }
 
+  sub {
+    font-size: 10px;
+  }
+
+  em {
+    font-style: italic;
+  }
+
+  code {
+    font-size: 12px;
+    display: block;
+    line-height: 200%;
+    margin: 10px 0;
+    padding: 5px 10px;
+    background: rgba(0,0,0,0.25);
+  }
+
   p {
     line-height: 170%;
     margin-bottom: 10px;
